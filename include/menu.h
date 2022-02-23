@@ -3,11 +3,11 @@
 #include <Arduino.h>
 #include <EncButton.h>
 #include <LiquidCrystal_I2C.h>
-#include <microDS3231.h>
+#include <DS3231.h>
 #include <AHT10.h>
 
 extern AHT10 aht10;
-extern MicroDS3231 rtc;
+extern DS3231 rtc;
 extern LiquidCrystal_I2C lcd;
 extern EncButton<EB_TICK, 2, 3, 4> enc;
 
