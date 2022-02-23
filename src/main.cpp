@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <data.h>
 #include <DS3231.h>
 #include <AHT10.h>
 #include <menu.h>
