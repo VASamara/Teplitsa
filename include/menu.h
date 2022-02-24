@@ -19,6 +19,7 @@ public:
     void DateTime();
     void Podsvetka();
     void Podogrev();
+    void Fortochka();
 };
 
 #endif

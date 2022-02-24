@@ -131,3 +131,15 @@ void Menu::Podogrev()
     lcd.setCursor(0, 3);
     lcd.print(F(">Press to settings  "));
 }
+void Menu::Fortochka()
+{
+
+    lcd.setCursor(0, 0);
+    lcd.print(F("     Fortochka      "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("OpnTOut>  C&Tpot>  C"));
+    lcd.setCursor(0, 2);
+    lcd.print(F("ClsTOut<  C&Tpot<  C"));
+    lcd.setCursor(0, 3);
+    lcd.print(F(">Press to settings  "));
+}
