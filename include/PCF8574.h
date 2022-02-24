@@ -1,5 +1,7 @@
 #ifndef __PCF8574_H
 #define __PCF8574_H
+#include <Arduino.h>
+#include <Wire.h>
 
 enum IO_PORT : uint8_t
 {

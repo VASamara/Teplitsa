@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#include <Wire.h>
 #include <PCF8574.h>
 
 static const uint8_t PCF8574_ADDR = 0x20;
