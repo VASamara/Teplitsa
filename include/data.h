@@ -1,5 +1,12 @@
 #pragma once
 #include <Arduino.h>
+#include <DS3231.h>
+#include <AHT10.h>
+#include <menu.h>
+#include <EncButton.h>
+#include <LiquidCrystal_I2C.h>
+#include <PCF8574.h>
+#include <EEPROM.h>
 
 #define SW 0        // Кнопка энкодера  pin D0
 #define POMP 1      // Насос для полива pin D1

@@ -1,11 +1,5 @@
-#include <Arduino.h>
 #include <data.h>
-#include <DS3231.h>
-#include <AHT10.h>
-#include <menu.h>
-#include <EncButton.h>
-#include <LiquidCrystal_I2C.h>
-#include <PCF8574.h>
+
 AHT10 aht10;
 DS3231 rtc;
 LiquidCrystal_I2C lcd(0x27, 20, 4);

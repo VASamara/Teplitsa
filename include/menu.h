@@ -15,6 +15,10 @@ class Menu
 {
 public:
     void mainMenu();
+    void mainMenu1();
+    void DateTime();
+    void Podsvetka();
+    void Podogrev();
 };
 
 #endif
