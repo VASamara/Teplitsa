@@ -1,10 +1,6 @@
 #ifndef menu_h
 #define menu_h
-#include <Arduino.h>
-#include <EncButton.h>
-#include <LiquidCrystal_I2C.h>
-#include <DS3231.h>
-#include <AHT10.h>
+#include <data.h>
 
 extern AHT10 aht10;
 extern DS3231 rtc;
@@ -20,6 +16,7 @@ public:
     void Podsvetka();
     void Podogrev();
     void Fortochka();
+    void Poliv(uint8_t valve);
 };
 
 #endif

@@ -118,6 +118,18 @@ void Menu::Podsvetka()
     lcd.print(F("Zakat   :   Dlit   m"));
     lcd.setCursor(0, 3);
     lcd.print(F(">Press to settings  "));
+    lcd.setCursor(6, 1);
+    lcd.print(EEPROM.read(0));
+    lcd.setCursor(9, 1);
+    lcd.print(EEPROM.read(1));
+    lcd.setCursor(17, 1);
+    lcd.print(EEPROM.read(2));
+    lcd.setCursor(6, 2);
+    lcd.print(EEPROM.read(3));
+    lcd.setCursor(9, 2);
+    lcd.print(EEPROM.read(4));
+    lcd.setCursor(17, 2);
+    lcd.print(EEPROM.read(5));
 }
 
 void Menu::Podogrev()
@@ -130,6 +142,18 @@ void Menu::Podogrev()
     lcd.print(F("Zakat   :   TmpN   C"));
     lcd.setCursor(0, 3);
     lcd.print(F(">Press to settings  "));
+    lcd.setCursor(6, 1);
+    lcd.print(EEPROM.read(6));
+    lcd.setCursor(9, 1);
+    lcd.print(EEPROM.read(7));
+    lcd.setCursor(17, 1);
+    lcd.print(EEPROM.read(8));
+    lcd.setCursor(6, 2);
+    lcd.print(EEPROM.read(9));
+    lcd.setCursor(9, 2);
+    lcd.print(EEPROM.read(10));
+    lcd.setCursor(17, 2);
+    lcd.print(EEPROM.read(11));
 }
 void Menu::Fortochka()
 {
@@ -142,4 +166,27 @@ void Menu::Fortochka()
     lcd.print(F("ClsTOut<  C&Tpot<  C"));
     lcd.setCursor(0, 3);
     lcd.print(F(">Press to settings  "));
+    lcd.setCursor(8, 1);
+    lcd.print(EEPROM.read(12));
+    lcd.setCursor(17, 1);
+    lcd.print(EEPROM.read(13));
+    lcd.setCursor(8, 2);
+    lcd.print(EEPROM.read(14));
+    lcd.setCursor(17, 2);
+    lcd.print(EEPROM.read(15));
+}
+void Menu::Poliv(uint8_t valve)
+{
+    lcd.setCursor(0, 0);
+    lcd.print(F("1234567WD Poliv Vlv "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("        On  :  Min  "));
+    lcd.setCursor(0, 2);
+    lcd.print(F("        On  :  Min  "));
+    lcd.setCursor(0, 3);
+    lcd.print(F(">Press to settings  "));
+    lcd.setCursor(19, 0);
+    lcd.print(valve);
+    lcd.setCursor(0, 1);
+    lcd.print(0);
 }

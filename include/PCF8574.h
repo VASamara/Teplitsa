@@ -5,14 +5,14 @@
 
 enum IO_PORT : uint8_t
 {
-    BIT_0 = 1 << 0,
-    BIT_1 = 1 << 1,
-    BIT_2 = 1 << 2,
-    BIT_3 = 1 << 3,
-    BIT_4 = 1 << 4,
-    BIT_5 = 1 << 5,
-    BIT_6 = 1 << 6,
-    BIT_7 = 1 << 7
+    POMP = 1 << 0,
+    VLV_1 = 1 << 1,
+    VLV_2 = 1 << 2,
+    VLV_3 = 1 << 3,
+    VLV_4 = 1 << 4,
+    VLV_5 = 1 << 5,
+    VLV_6 = 1 << 6,
+    VLV_7 = 1 << 7
 };
 
 class PCF8574

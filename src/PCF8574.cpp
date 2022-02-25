@@ -19,21 +19,21 @@ uint8_t PCF8574::getRegister()
     return data;
 }
 
-void PCF8574::setBit(uint8_t s, bool vol)
+void PCF8574::setBit(uint8_t bit, bool vol)
 {
     Wire.beginTransmission(PCF8574_ADDR);
     Wire.requestFrom(PCF8574_ADDR, (uint8_t)1);
     uint8_t data = Wire.read();
-    (vol == true) ? Wire.write(data | s) : Wire.write(data & ~s);
+    (vol == true) ? Wire.write(data | bit) : Wire.write(data & ~bit);
     Wire.endTransmission();
 }
 
-bool PCF8574::getBit(uint8_t g)
+bool PCF8574::getBit(uint8_t bit)
 {
     Wire.beginTransmission(PCF8574_ADDR);
     Wire.requestFrom(PCF8574_ADDR, (uint8_t)1);
     uint8_t data = Wire.read();
     Wire.endTransmission();
-    bool dt = data & g;
+    bool dt = data & bit;
     return dt;
 }
