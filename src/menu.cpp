@@ -1,6 +1,8 @@
 #include <menu.h>
-
-void Menu::mainMenu()
+extern LiquidCrystal_I2C lcd;
+extern AHT10 aht10;
+extern DS3231 rtc;
+void MenuLCD::mainMenu()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("  :  Day  AtD   mmRs"));
@@ -36,7 +38,7 @@ void Menu::mainMenu()
     lcd.print(uint8_t(aht10.getHumidity())); //Заменить на потолочный датчик
 }
 
-void Menu::mainMenu1()
+void MenuLCD::mainMenu1()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("  :  Day  AtD   mmRs"));
@@ -72,7 +74,7 @@ void Menu::mainMenu1()
     lcd.print(uint8_t(aht10.getTemperature())); //Заменить на датчик подогрева пола
 }
 
-void Menu::DateTime()
+void MenuLCD::DateTime()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("     Date/Time      "));
@@ -108,7 +110,7 @@ void Menu::DateTime()
     lcd.print(rtc.getYear());
 }
 
-void Menu::Podsvetka()
+void MenuLCD::Podsvetka()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("     Podsvetka      "));
@@ -132,7 +134,7 @@ void Menu::Podsvetka()
     lcd.print(EEPROM.read(5));
 }
 
-void Menu::Podogrev()
+void MenuLCD::Podogrev()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("   Podogrev pola    "));
@@ -155,7 +157,7 @@ void Menu::Podogrev()
     lcd.setCursor(17, 2);
     lcd.print(EEPROM.read(11));
 }
-void Menu::Fortochka()
+void MenuLCD::Fortochka()
 {
 
     lcd.setCursor(0, 0);
@@ -175,7 +177,7 @@ void Menu::Fortochka()
     lcd.setCursor(17, 2);
     lcd.print(EEPROM.read(15));
 }
-void Menu::Poliv(uint8_t valve)
+void MenuLCD::Poliv()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("1234567WD Poliv Vlv "));
@@ -186,7 +188,7 @@ void Menu::Poliv(uint8_t valve)
     lcd.setCursor(0, 3);
     lcd.print(F(">Press to settings  "));
     lcd.setCursor(19, 0);
-    lcd.print(valve);
+    lcd.print(0);
     lcd.setCursor(0, 1);
     lcd.print(0);
 }

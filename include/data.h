@@ -8,6 +8,7 @@
 #include <PCF8574.h>
 #include <EEPROM.h>
 #include <elapsedMillis.h>
+#include <Poliv.h>
 
 #define SW 0        // Кнопка энкодера  pin D0
 #define POMP 1      // Насос для полива pin D1

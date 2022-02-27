@@ -1,14 +1,14 @@
-#ifndef menu_h
-#define menu_h
+#ifndef _MENU_H
+#define _MENU_H
 #include <data.h>
 
-extern AHT10 aht10;
-extern DS3231 rtc;
-extern LiquidCrystal_I2C lcd;
-extern EncButton<EB_TICK, 2, 3, 4> enc;
+//extern AHT10 aht10;
+//extern DS3231 rtc;
+//extern LiquidCrystal_I2C lcd;
+//extern EncButton<EB_TICK, 2, 3, 4> enc;
 // extern PCF8574 portPoliv;
 
-class Menu
+class MenuLCD
 {
 public:
     void mainMenu();
@@ -17,7 +17,7 @@ public:
     void Podsvetka();
     void Podogrev();
     void Fortochka();
-    void Poliv(uint8_t valve);
+    void Poliv();
 };
 
 #endif

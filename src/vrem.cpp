@@ -1,3 +1,4 @@
+/*
 void func(void)
 {
     // lcd.clear();
@@ -93,3 +94,4 @@ void menu()
         }
     }
 }
+*/
