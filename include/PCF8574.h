@@ -20,8 +20,8 @@ class PCF8574
 public:
     static void setRegister(uint8_t);
     static uint8_t getRegister();
-    static void setBit(uint8_t, bool);
-    static bool getBit(uint8_t);
+    static void setBit(IO_PORT, bool);
+    static bool getBit(IO_PORT);
 };
 
 #endif

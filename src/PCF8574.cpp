@@ -1,6 +1,7 @@
 #include <PCF8574.h>
 
 static const uint8_t PCF8574_ADDR = 0x20;
+IO_PORT bit;
 
 void PCF8574::setRegister(uint8_t setVal)
 {
@@ -19,7 +20,7 @@ uint8_t PCF8574::getRegister()
     return data;
 }
 
-void PCF8574::setBit(uint8_t bit, bool vol)
+void PCF8574::setBit(IO_PORT bit, bool vol)
 {
     Wire.beginTransmission(PCF8574_ADDR);
     Wire.requestFrom(PCF8574_ADDR, (uint8_t)1);
@@ -28,7 +29,7 @@ void PCF8574::setBit(uint8_t bit, bool vol)
     Wire.endTransmission();
 }
 
-bool PCF8574::getBit(uint8_t bit)
+bool PCF8574::getBit(IO_PORT bit)
 {
     Wire.beginTransmission(PCF8574_ADDR);
     Wire.requestFrom(PCF8574_ADDR, (uint8_t)1);

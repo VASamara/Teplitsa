@@ -9,9 +9,10 @@
 #include <EEPROM.h>
 #include <elapsedMillis.h>
 #include <Poliv.h>
+#include <sun.h>
 
 #define SW 0        // Кнопка энкодера  pin D0
-#define POMP 1      // Насос для полива pin D1
+#define DALLAS_3 1  // Насос для полива pin D1
 #define DT 2        // Сигнал энкодера
 #define CLK 3       // Сигнал энкодера
 #define WCNTR 4     // Счетчик расхода воды
