@@ -1,55 +1,47 @@
 #include <sun.h>
 
 extern DS3231 rtc;
-uint8_t SunriseHour = EEPROM.read(0);
-uint8_t SunriseMinute = EEPROM.read(1);
-uint8_t duratRise = EEPROM.read(2);
-uint8_t SunsetHour = EEPROM.read(3);
-uint8_t SunsetMinute = EEPROM.read(4);
-uint8_t duratSet = EEPROM.read(5);
 
-void Sun::sunrise()
+void Sun::lighting()
 {
-    elapsedSeconds eSeconds;
-    uint8_t bright = 0;
-    if ((SunriseHour == rtc.getHour()) && (SunriseMinute >= rtc.getMinute()) && (duratRise != 0))
+
+    bool day;
+    uint8_t bright;
+    if ((rtc.getHour() >= EEPROM.read(EE_SUNRISE_HOUR)) && (rtc.getHour() < EEPROM.read(EE_SUNSET_HOUR)))
     {
-        if (bright = 255)
+        day = true;
+        elapsedSeconds riseInt;
+        if (riseInt >= (EEPROM.read(EE_DURATION_SUN) * 60))
+            bright = 255;
+    }
+    else
+    {
+        day = false;
+        bright = 0;
+    }
+
+    if ((EEPROM.read(EE_SUNRISE_HOUR) == rtc.getHour()) && (EEPROM.read(EE_SUNRISE_MINUTE) >= rtc.getMinute()) && (EEPROM.read(EE_DURATION_SUN) != 0) && (day == true))
+    {
+        if (bright == 255)
             return;
-        if (eSeconds >= (duratRise * 60 / 256))
+        elapsedSeconds brightInt;
+        if (brightInt >= (EEPROM.read(EE_DURATION_SUN) * 60 / 256))
         {
-            eSeconds = 0;
+            brightInt = 0;
             bright++;
             analogWrite(LIGHT, bright);
         }
     }
-}
-void Sun::sunset()
-{
-    elapsedSeconds eSeconds;
-    uint8_t bright=255;
-    if ((SunsetHour == rtc.getHour()) && (SunsetMinute >= rtc.getMinute()) && (duratSet != 0))
-        for (uint8_t bright = 255; bright > 0;)
+    if ((EEPROM.read(EE_SUNSET_HOUR) == rtc.getHour()) && (EEPROM.read(EE_SUNSET_MINUTE) >= rtc.getMinute()) && (EEPROM.read(EE_DURATION_SUN) != 0) && (day == false))
+    {
+        if (bright == 0)
+            return;
+        elapsedSeconds brightInt;
+        if (brightInt >= (EEPROM.read(EE_DURATION_SUN) * 60 / 256))
         {
-            if (bright = 0)
-                return;
-            if (eSeconds >= (duratSet*60/256))
-            {
-                eSeconds = 0;
-                bright--;
-                analogWrite(LIGHT, bright);
-            }
+            brightInt = 0;
+            bright--;
+            analogWrite(LIGHT, bright);
         }
-}
-void Sun::day()
-{
-    elapsedSeconds eSeconds;
-    if ((rtc.getHour() >= (SunriseHour)) && (rtc.getHour() < SunsetHour) && (eSeconds >= (duratRise * 60)))
-        digitalWrite(LIGHT, HIGH);
-}
-void Sun::night()
-{
-    elapsedSeconds eSeconds;
-    if ((rtc.getHour() >= (SunsetHour)) && (rtc.getHour() < SunriseHour) && (eSeconds >= (duratSet * 60)))
-        digitalWrite(LIGHT, LOW);
+    }
 }

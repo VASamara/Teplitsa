@@ -2,7 +2,7 @@
 
 extern PCF8574 portPoliv;
 extern DS3231 rtc;
-elapsedSeconds timePoliv;
+
 
 void Poliv::SetPoliv(IO_PORT)
 {
@@ -15,46 +15,46 @@ void Poliv::SetPoliv(IO_PORT)
     switch (bitValve)
     {
     case VLV_1:
-        SetWeekDays = EEPROM.read(16);
-        SetHours = EEPROM.read(17);
-        SetMinutes = EEPROM.read(18);
-        SetLong = EEPROM.read(19);
+        SetWeekDays = EEPROM.read(EE_VLV_1_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_1_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_1_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_1_SET_LONG);
         break;
     case VLV_2:
-        SetWeekDays = EEPROM.read(20);
-        SetHours = EEPROM.read(21);
-        SetMinutes = EEPROM.read(22);
-        SetLong = EEPROM.read(23);
+        SetWeekDays = EEPROM.read(EE_VLV_2_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_2_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_2_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_2_SET_LONG);
         break;
     case VLV_3:
-        SetWeekDays = EEPROM.read(24);
-        SetHours = EEPROM.read(25);
-        SetMinutes = EEPROM.read(26);
-        SetLong = EEPROM.read(27);
+        SetWeekDays = EEPROM.read(EE_VLV_3_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_3_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_3_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_3_SET_LONG);
         break;
     case VLV_4:
-        SetWeekDays = EEPROM.read(28);
-        SetHours = EEPROM.read(29);
-        SetMinutes = EEPROM.read(30);
-        SetLong = EEPROM.read(31);
+        SetWeekDays = EEPROM.read(EE_VLV_4_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_4_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_4_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_4_SET_LONG);
         break;
     case VLV_5:
-        SetWeekDays = EEPROM.read(32);
-        SetHours = EEPROM.read(33);
-        SetMinutes = EEPROM.read(34);
-        SetLong = EEPROM.read(35);
+        SetWeekDays = EEPROM.read(EE_VLV_5_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_5_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_5_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_5_SET_LONG);
         break;
     case VLV_6:
-        SetWeekDays = EEPROM.read(36);
-        SetHours = EEPROM.read(37);
-        SetMinutes = EEPROM.read(38);
-        SetLong = EEPROM.read(39);
+        SetWeekDays = EEPROM.read(EE_VLV_6_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_6_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_6_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_6_SET_LONG);
         break;
     case VLV_7:
-        SetWeekDays = EEPROM.read(40);
-        SetHours = EEPROM.read(41);
-        SetMinutes = EEPROM.read(42);
-        SetLong = EEPROM.read(43);
+        SetWeekDays = EEPROM.read(EE_VLV_7_SET_WEEK_DAYS);
+        SetHours = EEPROM.read(EE_VLV_7_SET_HOUR);
+        SetMinutes = EEPROM.read(EE_VLV_7_SET_MINUTE);
+        SetLong = EEPROM.read(EE_VLV_7_SET_LONG);
         break;
     }
     static bool start;
@@ -85,6 +85,7 @@ void Poliv::SetPoliv(IO_PORT)
 
     if ((SetHours == rtc.getHour()) && (SetMinutes >= rtc.getMinute()) && (start == true) && (SetLong != 0))
     {
+        elapsedSeconds timePoliv;
         portPoliv.setBit(POMP, true);
         portPoliv.setBit(bitValve, true);
         // timePoliv = 0;

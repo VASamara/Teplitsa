@@ -2,12 +2,9 @@
 #define _POLIV_H
 #include <data.h>
 
-
-
 class Poliv
 {
 private:
-    /* data */
 public:
     enum WeekDay : uint8_t
 

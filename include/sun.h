@@ -6,9 +6,7 @@ class Sun
 {
 private:
 public:
-    void sunrise();
-    void sunset();
-    void day();
-    void night();
+    void lighting();
+    
 };
 #endif

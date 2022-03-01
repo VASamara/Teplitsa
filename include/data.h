@@ -10,26 +10,73 @@
 #include <elapsedMillis.h>
 #include <Poliv.h>
 #include <sun.h>
+#include <heat.h>
+#include <microDS18B20.h>
 
-#define SW 0        // Кнопка энкодера  pin D0
-#define DALLAS_3 1  // Насос для полива pin D1
-#define DT 2        // Сигнал энкодера
-#define CLK 3       // Сигнал энкодера
-#define WCNTR 4     // Счетчик расхода воды
-#define HEAT 5      // Подогрев пола в рассаднике
-#define DRIVER 6    // Привод окна в теплице
-#define DALLAS_1 7  // Датчик температуры подогрева пола в рвссаднике
-#define DALLAS_2 8  // Датчики температуры грунта
-#define LIGHT 9     // Освещение в рассаднике
-#define SS 10       // Шина SPI
-#define MOSI 11     // Шина SPI
-#define MISO 12     // Шина SPI
-#define SCK 13      // Шина SPI
-#define SENS_0 A0   // Датчик влажности грунта
-#define SENS_VCC A1 // Питание датчиков влажности грунта
-#define SENS_1 A2   // Датчик влажности грунта
-#define SENS_2 A3   // Датчик влажности грунта
-#define SDA A4      // Шина I2C
-#define SCL A5      // Шина I2C
-#define SENS_3 A6   // Датчик влажности грунта
-#define SENS_4 A7   // Датчик влажности грунта
+#define SW 0        // Кнопка энкодера  pin D0                         // SW
+#define WCNTR 1     // Счетчик расхода воды                            // RELAY_0
+#define DT 2        // Сигнал энкодера                                 // DT
+#define CLK 3       // Сигнал энкодера                                 // CLK
+#define DALLAS_1 4  // Датчик температуры подогрева пола в рвссаднике  // RELAY_1
+#define HEAT 5      // Подогрев пола в рассаднике                      // RELAY_2
+#define DRV_PWM 6   // Привод окна в теплице PWM                       // RELAY_3
+#define DRV_SIG_1 7 // Привод окна в теплице IN1                       // RELAY_4
+#define DRV_SIG_2 8 // Привод окна в теплице IN2                       // RELAY_5
+#define LIGHT 9     // Освещение в рассаднике                          // RELAY_6
+//#define SS 10       // Шина SPI                                        // DRV_SIGNAL1 10
+//#define MOSI 11     // Шина SPI                                        // DRV_PWM     11
+//#define MISO 12     // Шина SPI                                        // DRV_SIGNAL2 12
+//#define SCK 13      // Шина SPI                                        // SERVO_0   13
+#define SENS_0 A0   // Датчик влажности грунта                         // SERVO_1   A0
+#define SENS_VCC A1 // Питание датчиков влажности грунта               // SENS_VCC  A1
+#define SENS_1 A2   // Датчик влажности грунта                         // SENS_1    A2
+#define SENS_2 A3   // Датчик влажности грунта                         // SENS_2    A3
+//#define SDA A4      // Шина I2C                                        //
+//#define SCL A5      // Шина I2C                                        //
+#define SENS_3 A6   // Датчик температуры грунта                       // SENS_3    A6
+#define SENS_4 A7   // Датчик температуры грунта                       // SENS_4    A7
+
+#define EE_SUNRISE_HOUR 0
+#define EE_SUNRISE_MINUTE 1
+#define EE_DURATION_SUN 2
+#define EE_SUNSET_HOUR 3
+#define EE_SUNSET_MINUTE 4
+#define EE_TEMP_HEATING_DAY 5
+#define EE_TEMP_HEATING_NIGHT 6
+#define EE_TEMP_HEATING_POWER 7
+
+#define EE_VLV_1_SET_WEEK_DAYS 20
+#define EE_VLV_1_SET_HOUR 21
+#define EE_VLV_1_SET_MINUTE 22
+#define EE_VLV_1_SET_LONG 23
+
+#define EE_VLV_2_SET_WEEK_DAYS 24
+#define EE_VLV_2_SET_HOUR 25
+#define EE_VLV_2_SET_MINUTE 26
+#define EE_VLV_2_SET_LONG 27
+
+#define EE_VLV_3_SET_WEEK_DAYS 28
+#define EE_VLV_3_SET_HOUR 29
+#define EE_VLV_3_SET_MINUTE 30
+#define EE_VLV_3_SET_LONG 31
+
+#define EE_VLV_4_SET_WEEK_DAYS 32
+#define EE_VLV_4_SET_HOUR 33
+#define EE_VLV_4_SET_MINUTE 34
+#define EE_VLV_4_SET_LONG 35
+
+#define EE_VLV_5_SET_WEEK_DAYS 36
+#define EE_VLV_5_SET_HOUR 37
+#define EE_VLV_5_SET_MINUTE 38
+#define EE_VLV_5_SET_LONG 39
+
+#define EE_VLV_6_SET_WEEK_DAYS 40
+#define EE_VLV_6_SET_HOUR 41
+#define EE_VLV_6_SET_MINUTE 42
+#define EE_VLV_6_SET_LONG 43
+
+#define EE_VLV_7_SET_WEEK_DAYS 44
+#define EE_VLV_7_SET_HOUR 45
+#define EE_VLV_7_SET_MINUTE 46
+#define EE_VLV_7_SET_LONG 47
+
