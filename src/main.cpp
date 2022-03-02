@@ -10,21 +10,35 @@ Sun sun;
 Heat heat;
 Poliv poliv;
 MicroDS18B20<DALLAS_1> ds;
+IO_PORT bitValve;
 
 void setup()
 {
   pinMode(LIGHT, OUTPUT);
   pinMode(HEAT, OUTPUT);
+  pinMode(DRV_PWM, OUTPUT);
+  pinMode(DRV_SIG_1, OUTPUT);
+  pinMode(DRV_SIG_2, OUTPUT);
   lcd.init();
   lcd.backlight();
   Serial.begin(115200);
   enc.getState();
+  menu.mainMenu();
 }
 void loop()
 {
-  sun.lighting();
-  heat.heating();
+  enc.tick();
+  if (enc.click())
+    Serial.println("click");
+  if (enc.held())
+  {
+    menu.SetupMenu();
+  }
+  if (enc.turn())
+    menu.mainMenu1();
 
-  menu.mainMenu();
-  menu.Poliv();
+// un.Lighting();
+// heat.Heating();
+
+// menu.Poliv();
 }

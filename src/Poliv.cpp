@@ -3,7 +3,6 @@
 extern PCF8574 portPoliv;
 extern DS3231 rtc;
 
-
 void Poliv::SetPoliv(IO_PORT)
 {
 
@@ -11,7 +10,7 @@ void Poliv::SetPoliv(IO_PORT)
     uint8_t SetHours = constrain(SetHours, 0, 23);
     uint8_t SetMinutes = constrain(SetMinutes, 0, 59);
     uint8_t SetLong = constrain(SetLong, 0, 59);
-    static IO_PORT bitValve;
+    extern IO_PORT bitValve;
     switch (bitValve)
     {
     case VLV_1:
@@ -88,7 +87,7 @@ void Poliv::SetPoliv(IO_PORT)
         elapsedSeconds timePoliv;
         portPoliv.setBit(POMP, true);
         portPoliv.setBit(bitValve, true);
-        // timePoliv = 0;
+
         if (timePoliv >= (SetLong * 60))
         {
             portPoliv.setRegister(0);

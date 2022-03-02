@@ -6,7 +6,6 @@ class Sun
 {
 private:
 public:
-    void lighting();
-    
+    void Lighting();
 };
 #endif

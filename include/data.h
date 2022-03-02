@@ -13,16 +13,16 @@
 #include <heat.h>
 #include <microDS18B20.h>
 
-#define SW 0        // Кнопка энкодера  pin D0                         // SW
+#define SW 0        //* Кнопка энкодера  pin D0                         // SW
 #define WCNTR 1     // Счетчик расхода воды                            // RELAY_0
-#define DT 2        // Сигнал энкодера                                 // DT
-#define CLK 3       // Сигнал энкодера                                 // CLK
-#define DALLAS_1 4  // Датчик температуры подогрева пола в рвссаднике  // RELAY_1
-#define HEAT 5      // Подогрев пола в рассаднике                      // RELAY_2
-#define DRV_PWM 6   // Привод окна в теплице PWM                       // RELAY_3
-#define DRV_SIG_1 7 // Привод окна в теплице IN1                       // RELAY_4
-#define DRV_SIG_2 8 // Привод окна в теплице IN2                       // RELAY_5
-#define LIGHT 9     // Освещение в рассаднике                          // RELAY_6
+#define DT 2        //* Сигнал энкодера                                 // DT
+#define CLK 3       //* Сигнал энкодера                                 // CLK
+#define DALLAS_1 4  //* Датчик температуры подогрева пола в рвссаднике  // RELAY_1
+#define HEAT 5      //* Подогрев пола в рассаднике                      // RELAY_2
+#define DRV_PWM 6   //* Привод окна в теплице PWM                       // RELAY_3
+#define DRV_SIG_1 7 //* Привод окна в теплице IN1                       // RELAY_4
+#define DRV_SIG_2 8 //* Привод окна в теплице IN2                       // RELAY_5
+#define LIGHT 9     //* Освещение в рассаднике                          // RELAY_6
 //#define SS 10       // Шина SPI                                        // DRV_SIGNAL1 10
 //#define MOSI 11     // Шина SPI                                        // DRV_PWM     11
 //#define MISO 12     // Шина SPI                                        // DRV_SIGNAL2 12
@@ -41,9 +41,17 @@
 #define EE_DURATION_SUN 2
 #define EE_SUNSET_HOUR 3
 #define EE_SUNSET_MINUTE 4
+
 #define EE_TEMP_HEATING_DAY 5
 #define EE_TEMP_HEATING_NIGHT 6
-#define EE_TEMP_HEATING_POWER 7
+#define EE_HEATING_PWM 7
+
+#define EE_TEMP_COOLING_OUT_ON 8
+#define EE_TEMP_COOLING_OUT_OFF 9
+#define EE_TEMP_COOLING_IN_ON 10
+#define EE_TEMP_COOLING_IN_OFF 11
+#define EE_COOLING_PWM 12
+#define EE_COOLING_DRV_STOP_DELAY 13
 
 #define EE_VLV_1_SET_WEEK_DAYS 20
 #define EE_VLV_1_SET_HOUR 21

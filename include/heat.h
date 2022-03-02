@@ -6,6 +6,8 @@ class Heat
 {
 private:
 public:
-    void heating();
+    void Heating();
+    void Cooling();
+    void ButCooling();
 };
 #endif

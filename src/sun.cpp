@@ -2,7 +2,7 @@
 
 extern DS3231 rtc;
 
-void Sun::lighting()
+void Sun::Lighting()
 {
 
     bool day;

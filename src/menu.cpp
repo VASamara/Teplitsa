@@ -2,6 +2,20 @@
 extern LiquidCrystal_I2C lcd;
 extern AHT10 aht10;
 extern DS3231 rtc;
+extern IO_PORT bitValve;
+
+void MenuLCD::SetupMenu()
+{
+    lcd.setCursor(0, 0);
+    lcd.print(F("Cooling             "));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Heating             "));
+    lcd.setCursor(0, 2);
+    lcd.print(F("Poliv               "));
+    lcd.setCursor(0, 3);
+    lcd.print(F("Logging             "));
+
+}
 void MenuLCD::mainMenu()
 {
     lcd.setCursor(0, 0);
@@ -16,25 +30,25 @@ void MenuLCD::mainMenu()
     if (rtc.getHour() < 10)
         lcd.print(F("0"));
     lcd.print(rtc.getHour());
-    lcd.setCursor(0, 3);
+    lcd.setCursor(3, 0);
     if (rtc.getMinute() < 10)
         lcd.print(F("0"));
     lcd.print(rtc.getMinute());
-    lcd.setCursor(0, 8);
+    lcd.setCursor(8, 0);
     lcd.print(rtc.getWeekDay());
-    lcd.setCursor(0, 13);
+    lcd.setCursor(13, 0);
     if (rtc.getSecond() < 10) //Заменить на атмосферное давление
         lcd.print(F("0"));    //когда будет датчик
     lcd.print(rtc.getSecond());
-    lcd.setCursor(2, 0);
+    lcd.setCursor(0, 2);
     lcd.print(uint8_t(aht10.getTemperature()));
-    lcd.setCursor(2, 4);
+    lcd.setCursor(4, 2);
     lcd.print(uint8_t(aht10.getHumidity()));
-    lcd.setCursor(2, 8);
+    lcd.setCursor(8, 2);
     lcd.print(uint8_t(aht10.getTemperature())); //Заменить на наружный датчик
-    lcd.setCursor(2, 12);
+    lcd.setCursor(12, 2);
     lcd.print(uint8_t(aht10.getHumidity())); //Заменить на наружный датчик
-    lcd.setCursor(2, 16);
+    lcd.setCursor(16, 2);
     lcd.print(uint8_t(aht10.getHumidity())); //Заменить на потолочный датчик
 }
 
@@ -52,25 +66,25 @@ void MenuLCD::mainMenu1()
     if (rtc.getHour() < 10)
         lcd.print(F("0"));
     lcd.print(rtc.getHour());
-    lcd.setCursor(0, 3);
+    lcd.setCursor(3, 0);
     if (rtc.getMinute() < 10)
         lcd.print(F("0"));
     lcd.print(rtc.getMinute());
-    lcd.setCursor(0, 8);
+    lcd.setCursor(8, 0);
     lcd.print(rtc.getWeekDay());
-    lcd.setCursor(0, 13);
+    lcd.setCursor(13, 0);
     if (rtc.getSecond() < 10) //Заменить на атмосферное давление
         lcd.print(F("0"));    //когда будет датчик
     lcd.print(rtc.getSecond());
-    lcd.setCursor(2, 0);
+    lcd.setCursor(0, 2);
     lcd.print(uint8_t(aht10.getTemperature())); //Заменить на датчик температуры почвы
-    lcd.setCursor(2, 4);
+    lcd.setCursor(4, 2);
     lcd.print(uint8_t(aht10.getHumidity())); //Заменить на датчик влажности почвы
-    lcd.setCursor(2, 8);
+    lcd.setCursor(8, 2);
     lcd.print(uint8_t(aht10.getTemperature())); //Заменить на наружный датчик температуры почвы
-    lcd.setCursor(2, 12);
+    lcd.setCursor(12, 2);
     lcd.print(uint8_t(aht10.getHumidity())); //Заменить на наружный датчик влажности почвы
-    lcd.setCursor(2, 16);
+    lcd.setCursor(16, 2);
     lcd.print(uint8_t(aht10.getTemperature())); //Заменить на датчик подогрева пола
 }
 
@@ -110,31 +124,30 @@ void MenuLCD::DateTime()
     lcd.print(rtc.getYear());
 }
 
-void MenuLCD::Podsvetka()
+void MenuLCD::Lighting()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("     Podsvetka      "));
     lcd.setCursor(0, 1);
-    lcd.print(F("Rassv   :   Dlit   m"));
+    lcd.print(F("Rassvet        :    "));
     lcd.setCursor(0, 2);
-    lcd.print(F("Zakat   :   Dlit   m"));
+    lcd.print(F("Zakat          :    "));
     lcd.setCursor(0, 3);
-    lcd.print(F(">Press to settings  "));
-    lcd.setCursor(6, 1);
-    lcd.print(EEPROM.read(0));
-    lcd.setCursor(9, 1);
-    lcd.print(EEPROM.read(1));
-    lcd.setCursor(17, 1);
-    lcd.print(EEPROM.read(2));
-    lcd.setCursor(6, 2);
-    lcd.print(EEPROM.read(3));
-    lcd.setCursor(9, 2);
-    lcd.print(EEPROM.read(4));
-    lcd.setCursor(17, 2);
-    lcd.print(EEPROM.read(5));
+    lcd.print(F("Dlitelnost       min"));
+    lcd.setCursor(12, 1);
+    lcd.print(EEPROM.read(EE_SUNRISE_HOUR));
+    lcd.setCursor(15, 1);
+    lcd.print(EEPROM.read(EE_SUNRISE_MINUTE));
+    lcd.setCursor(12, 2);
+    lcd.print(EEPROM.read(EE_SUNSET_HOUR));
+    lcd.setCursor(15, 2);
+    lcd.print(EEPROM.read(EE_SUNSET_MINUTE));
+    lcd.setCursor(12, 3);
+    lcd.print(EEPROM.read(EE_DURATION_SUN));
+    
 }
 
-void MenuLCD::Podogrev()
+void MenuLCD::Heating()
 {
     lcd.setCursor(0, 0);
     lcd.print(F("   Podogrev pola    "));
@@ -143,21 +156,23 @@ void MenuLCD::Podogrev()
     lcd.setCursor(0, 2);
     lcd.print(F("Zakat   :   TmpN   C"));
     lcd.setCursor(0, 3);
-    lcd.print(F(">Press to settings  "));
+    lcd.print(F("Heating PWM         "));
     lcd.setCursor(6, 1);
-    lcd.print(EEPROM.read(6));
+    lcd.print(EEPROM.read(EE_SUNRISE_HOUR));
     lcd.setCursor(9, 1);
-    lcd.print(EEPROM.read(7));
+    lcd.print(EEPROM.read(EE_SUNRISE_MINUTE));
     lcd.setCursor(17, 1);
-    lcd.print(EEPROM.read(8));
+    lcd.print(EEPROM.read(EE_TEMP_HEATING_DAY));
     lcd.setCursor(6, 2);
-    lcd.print(EEPROM.read(9));
+    lcd.print(EEPROM.read(EE_SUNSET_HOUR));
     lcd.setCursor(9, 2);
-    lcd.print(EEPROM.read(10));
+    lcd.print(EEPROM.read(EE_SUNSET_MINUTE));
     lcd.setCursor(17, 2);
-    lcd.print(EEPROM.read(11));
+    lcd.print(EEPROM.read(EE_TEMP_HEATING_NIGHT));
+    lcd.setCursor(17, 3);
+    lcd.print(EEPROM.read(EE_HEATING_PWM));
 }
-void MenuLCD::Fortochka()
+void MenuLCD::Cooling()
 {
 
     lcd.setCursor(0, 0);
@@ -167,28 +182,32 @@ void MenuLCD::Fortochka()
     lcd.setCursor(0, 2);
     lcd.print(F("ClsTOut<  C&Tpot<  C"));
     lcd.setCursor(0, 3);
-    lcd.print(F(">Press to settings  "));
+    lcd.print(F("CoolPWM    Delay   m"));
     lcd.setCursor(8, 1);
-    lcd.print(EEPROM.read(12));
+    lcd.print(EEPROM.read(EE_TEMP_COOLING_OUT_ON));
     lcd.setCursor(17, 1);
-    lcd.print(EEPROM.read(13));
+    lcd.print(EEPROM.read(EE_TEMP_COOLING_IN_ON));
     lcd.setCursor(8, 2);
-    lcd.print(EEPROM.read(14));
+    lcd.print(EEPROM.read(EE_TEMP_COOLING_OUT_OFF));
     lcd.setCursor(17, 2);
-    lcd.print(EEPROM.read(15));
+    lcd.print(EEPROM.read(EE_TEMP_COOLING_IN_OFF));
+    lcd.setCursor(8, 3);
+    lcd.print(EEPROM.read(EE_COOLING_PWM));
+    lcd.setCursor(17, 3);
+    lcd.print(EEPROM.read(EE_COOLING_DRV_STOP_DELAY));
 }
 void MenuLCD::Poliv()
 {
     lcd.setCursor(0, 0);
-    lcd.print(F("1234567WD Poliv Vlv "));
+    lcd.print(F("MO  FR    Poliv Vlv "));
     lcd.setCursor(0, 1);
-    lcd.print(F("        On  :  Min  "));
+    lcd.print(F("TU  SA   On     :   "));
     lcd.setCursor(0, 2);
-    lcd.print(F("        On  :  Min  "));
+    lcd.print(F("WE  SU   Time    min"));
     lcd.setCursor(0, 3);
-    lcd.print(F(">Press to settings  "));
-    lcd.setCursor(19, 0);
-    lcd.print(0);
+    lcd.print(F("TH  "));
+    lcd.setCursor(16, 0);
+    lcd.print(bitValve);
     lcd.setCursor(0, 1);
     lcd.print(0);
 }
