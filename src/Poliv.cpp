@@ -11,45 +11,54 @@ void Poliv::SetPoliv(IO_PORT)
     uint8_t SetMinutes = constrain(SetMinutes, 0, 59);
     uint8_t SetLong = constrain(SetLong, 0, 59);
     extern IO_PORT bitValve;
-    switch (bitValve)
+    extern uint8_t numValve;
+
+    switch (numValve)
     {
-    case VLV_1:
+    case 1:
+        bitValve = VLV_1;
         SetWeekDays = EEPROM.read(EE_VLV_1_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_1_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_1_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_1_SET_LONG);
         break;
-    case VLV_2:
+    case 2:
+        bitValve = VLV_2;
         SetWeekDays = EEPROM.read(EE_VLV_2_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_2_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_2_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_2_SET_LONG);
         break;
-    case VLV_3:
+    case 3:
+        bitValve = VLV_3;
         SetWeekDays = EEPROM.read(EE_VLV_3_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_3_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_3_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_3_SET_LONG);
         break;
-    case VLV_4:
+    case 4:
+        bitValve = VLV_4;
         SetWeekDays = EEPROM.read(EE_VLV_4_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_4_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_4_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_4_SET_LONG);
         break;
-    case VLV_5:
+    case 5:
+        bitValve = VLV_5;
         SetWeekDays = EEPROM.read(EE_VLV_5_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_5_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_5_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_5_SET_LONG);
         break;
-    case VLV_6:
+    case 6:
+        bitValve = VLV_6;
         SetWeekDays = EEPROM.read(EE_VLV_6_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_6_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_6_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_6_SET_LONG);
         break;
-    case VLV_7:
+    case 7:
+        bitValve = VLV_7;
         SetWeekDays = EEPROM.read(EE_VLV_7_SET_WEEK_DAYS);
         SetHours = EEPROM.read(EE_VLV_7_SET_HOUR);
         SetMinutes = EEPROM.read(EE_VLV_7_SET_MINUTE);

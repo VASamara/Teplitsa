@@ -32,8 +32,8 @@ void func(void)
 void menu()
 {
     if (enc.right() or enc.left())
-    {                                                       // Если кнопку нажали или удерживают
-        enc.counter = constrain(enc.counter, 0, ITEMS - 1); // Двигаем указатель в пределах дисплея
+    {                                                       
+        enc.counter = constrain(enc.counter, 0, ITEMS - 1); 
     }
 
     while (1)

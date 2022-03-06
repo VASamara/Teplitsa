@@ -11,14 +11,20 @@
 class MenuLCD
 {
 public:
-    void mainMenu();
-    void mainMenu1();
+    void MainMenu();
+    void MainMenu1();
     void DateTime();
+    void DateTimeSet();
     void Lighting();
+    void LightingSet();
     void Heating();
+    void HeatingSet();
     void Cooling();
-    void Poliv();
+    void CoolingSet();
+    void Watering();
+    void WateringSet();
     void SetupMenu();
+    void SetupMenuSet();
 };
 
 #endif
