@@ -31,7 +31,7 @@ void loop()
   enc.tick();
   if (enc.right() or enc.left())
   {
-    enc.counter = constrain(enc.counter, 0, 7);
+    enc.counter = constrain(enc.counter, 0, 13);
     Serial.println(enc.counter);
     switch (enc.counter)
     {
@@ -57,11 +57,17 @@ void loop()
       menu.Lighting();
       break;
     case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
       menu.Watering();
       break;
     }
   }
-  if (enc.click()) 
+  if (enc.click())
   {
     if (enc.counter == 2)
     {
@@ -93,46 +99,10 @@ void loop()
       Serial.print(enc.counter);
     }
     // return;
-    if (enc.counter == 7)
+    if ((enc.counter >= 7) and (enc.counter < 14))
     {
       menu.WateringSet();
       Serial.print(enc.counter);
     }
   }
-  // return;
-
-/*
-{
-  while (1)
-  {
-
-    enc.tick();
-    lcd.blink();
-    uint8_t str[]{8, 8, 8, 8};
-    uint8_t sim[]{0, 1, 2, 3};
-    uint8_t i = constrain(i, 0, 3);
-    if (enc.right())
-      i++;
-    if (enc.left())
-      i--;
-    lcd.setCursor(str[i], sim[i]);
-    if (enc.click() && (i == 0))
-    {
-      if (EEPROM.read(EE_COOLING_ON) == 0)
-      {
-        EEPROM.write(EE_COOLING_ON, 1);
-        lcd.print("On ");
-        lcd.noBlink();
-        return;
-      }
-      if (EEPROM.read(EE_COOLING_ON) == 1)
-      {
-        EEPROM.write(EE_COOLING_ON, 0);
-        lcd.print("Off");
-        lcd.noBlink();
-        return;
-      }
-    }
-  }
-}*/
 }

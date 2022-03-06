@@ -36,7 +36,7 @@ void Heat::Cooling()
 {
 
     elapsedSeconds es;
-    if ((tempAirIn > EEPROM.read(EE_TEMP_COOLING_IN_ON)) && (tempAirOut > EEPROM.read(EE_TEMP_COOLING_OUT_ON)) && (es >= 300))
+    if ((tempAirIn > EEPROM.read(EE_TEMP_COOLING_IN_OPEN)) && (tempAirOut > EEPROM.read(EE_TEMP_COOLING_OUT_OPEN)) && (es >= 300))
     {
         digitalWrite(DRV_SIG_1, HIGH);
         digitalWrite(DRV_SIG_2, LOW);
@@ -46,7 +46,7 @@ void Heat::Cooling()
             analogWrite(DRV_PWM, 0);
     }
 
-    if ((tempAirIn < EEPROM.read(EE_TEMP_COOLING_IN_OFF)) && (tempAirOut < EEPROM.read(EE_TEMP_COOLING_OUT_OFF)) && (es >= 300))
+    if ((tempAirIn < EEPROM.read(EE_TEMP_COOLING_IN_CLOSE)) && (tempAirOut < EEPROM.read(EE_TEMP_COOLING_OUT_CLOSE)) && (es >= 300))
     {
         digitalWrite(DRV_SIG_1, LOW);
         digitalWrite(DRV_SIG_2, HIGH);
