@@ -11,7 +11,7 @@ Heat heat;
 Poliv poliv;
 MicroDS18B20<DALLAS_1> ds;
 IO_PORT bitValve;
-uint8_t numValve;
+uint8_t numValve = constrain(numValve, 1, 7);
 
 void setup()
 {
@@ -22,17 +22,27 @@ void setup()
   pinMode(DRV_SIG_2, OUTPUT);
   lcd.init();
   lcd.backlight();
-  Serial.begin(115200);
+  //Serial.begin(115200);
   enc.getState();
   menu.MainMenu();
+  numValve = 1;
 }
 void loop()
 {
+  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+    heat.Cooling();
+  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+    heat.Heating();
+  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+    poliv.SetPoliv();
+
   enc.tick();
+  if(enc.held())
+  heat.ButCooling();
   if (enc.right() or enc.left())
   {
     enc.counter = constrain(enc.counter, 0, 13);
-    Serial.println(enc.counter);
+    //Serial.println(enc.counter);
     switch (enc.counter)
     {
     case 0:
@@ -70,39 +80,16 @@ void loop()
   if (enc.click())
   {
     if (enc.counter == 2)
-    {
       menu.SetupMenuSet();
-      Serial.print(enc.counter);
-    }
-    // return;
     if (enc.counter == 3)
-    {
       menu.DateTimeSet();
-      Serial.print(enc.counter);
-    }
-    // return;
     if (enc.counter == 4)
-    {
       menu.CoolingSet();
-      Serial.print(enc.counter);
-    }
-    // return;
     if (enc.counter == 5)
-    {
       menu.HeatingSet();
-      Serial.print(enc.counter);
-    }
-    // return;
     if (enc.counter == 6)
-    {
       menu.LightingSet();
-      Serial.print(enc.counter);
-    }
-    // return;
     if ((enc.counter >= 7) and (enc.counter < 14))
-    {
       menu.WateringSet();
-      Serial.print(enc.counter);
-    }
   }
 }

@@ -35,7 +35,7 @@ void Heat::Heating()
 void Heat::Cooling()
 {
 
-    elapsedSeconds es;
+    elapsedSeconds es; //Защита от дребезга, слишком частого срабатывания
     if ((tempAirIn > EEPROM.read(EE_TEMP_COOLING_IN_OPEN)) && (tempAirOut > EEPROM.read(EE_TEMP_COOLING_OUT_OPEN)) && (es >= 300))
     {
         digitalWrite(DRV_SIG_1, HIGH);
@@ -65,4 +65,5 @@ void Heat::ButCooling()
     elapsedSeconds drvStopDelay;
     if (drvStopDelay >= EEPROM.read(EE_COOLING_DRV_STOP_DELAY))
         analogWrite(DRV_PWM, 0);
+    
 }

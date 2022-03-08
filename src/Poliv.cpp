@@ -3,13 +3,13 @@
 extern PCF8574 portPoliv;
 extern DS3231 rtc;
 
-void Poliv::SetPoliv(IO_PORT)
+void Poliv::SetPoliv()
 {
 
     uint8_t SetWeekDays;
-    uint8_t SetHours = constrain(SetHours, 0, 23);
-    uint8_t SetMinutes = constrain(SetMinutes, 0, 59);
-    uint8_t SetLong = constrain(SetLong, 0, 59);
+    uint8_t SetHours;
+    uint8_t SetMinutes;
+    uint8_t SetLong;
     extern IO_PORT bitValve;
     extern uint8_t numValve;
 
@@ -65,6 +65,8 @@ void Poliv::SetPoliv(IO_PORT)
         SetLong = EEPROM.read(EE_VLV_7_SET_LONG);
         break;
     }
+    (numValve == 7) ? (numValve = 1) : (numValve++);
+    
     static bool start;
     switch (rtc.getWeekDay())
     {

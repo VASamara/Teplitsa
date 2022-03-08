@@ -5,9 +5,7 @@
 class Poliv
 {
 private:
-public:
     enum WeekDay : uint8_t
-
     {
         MO = 1 << 0,
         TU = 1 << 1,
@@ -18,7 +16,10 @@ public:
         SU = 1 << 6,
         PUST = 1 << 7
     };
-    void SetPoliv(IO_PORT);
+
+public:
+   
+    void SetPoliv();
 };
 
 #endif
