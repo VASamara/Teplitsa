@@ -13,6 +13,7 @@ MicroDS18B20<DALLAS_1> ds;
 IO_PORT bitValve;
 uint8_t numValve = constrain(numValve, 1, 7);
 
+
 void setup()
 {
   pinMode(LIGHT, OUTPUT);
@@ -22,27 +23,31 @@ void setup()
   pinMode(DRV_SIG_2, OUTPUT);
   lcd.init();
   lcd.backlight();
-  //Serial.begin(115200);
+  Serial.begin(115200);
   enc.getState();
   menu.MainMenu();
   numValve = 1;
 }
 void loop()
 {
-  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+
+  if (bitRead(EEPROM.read(EE_OPTION_ON), 0))
     heat.Cooling();
-  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+  if (bitRead(EEPROM.read(EE_OPTION_ON), 1))
     heat.Heating();
-  if ((EEPROM.read(bitRead(EE_OPTION_ON, 0))) != 0)
+  if (bitRead(EEPROM.read(EE_OPTION_ON), 2))
     poliv.SetPoliv();
+  if (bitRead(EEPROM.read(EE_OPTION_ON), 3))
+    sun.Lighting();
+   
 
   enc.tick();
-  if(enc.held())
-  heat.ButCooling();
+  if (enc.held())
+    heat.ButCooling();
   if (enc.right() or enc.left())
   {
     enc.counter = constrain(enc.counter, 0, 13);
-    //Serial.println(enc.counter);
+
     switch (enc.counter)
     {
     case 0:

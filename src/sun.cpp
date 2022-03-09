@@ -1,47 +1,44 @@
 #include <sun.h>
 
 extern DS3231 rtc;
+elapsedSeconds brightInt;
+elapsedSeconds riseInt;
+bool day;
+uint8_t bright;
 
 void Sun::Lighting()
 {
 
-    bool day;
-    uint8_t bright;
-    if ((rtc.getHour() >= EEPROM.read(EE_SUNRISE_HOUR)) && (rtc.getHour() < EEPROM.read(EE_SUNSET_HOUR)))
+    if ((rtc.getHour() >= EEPROM.read(EE_SUNRISE_HOUR)) && (rtc.getMinute() >= EEPROM.read(EE_SUNRISE_MINUTE)) && (!day) && (rtc.getHour() < EEPROM.read(EE_SUNSET_HOUR)))
     {
-        day = true;
-        elapsedSeconds riseInt;
-        if (riseInt >= (EEPROM.read(EE_DURATION_SUN) * 60))
-            bright = 255;
-    }
-    else
-    {
-        day = false;
-        bright = 0;
-    }
-
-    if ((EEPROM.read(EE_SUNRISE_HOUR) == rtc.getHour()) && (EEPROM.read(EE_SUNRISE_MINUTE) >= rtc.getMinute()) && (EEPROM.read(EE_DURATION_SUN) != 0) && (day == true))
-    {
-        if (bright == 255)
-            return;
-        elapsedSeconds brightInt;
         if (brightInt >= (EEPROM.read(EE_DURATION_SUN) * 60 / 256))
         {
-            brightInt = 0;
+
             bright++;
             analogWrite(LIGHT, bright);
+            brightInt = 0;
+            if (bright == 255)
+            {
+                day = true;
+                return;
+            }
         }
     }
-    if ((EEPROM.read(EE_SUNSET_HOUR) == rtc.getHour()) && (EEPROM.read(EE_SUNSET_MINUTE) >= rtc.getMinute()) && (EEPROM.read(EE_DURATION_SUN) != 0) && (day == false))
+    if ((rtc.getHour() == EEPROM.read(EE_SUNSET_HOUR)) && (rtc.getMinute() >= EEPROM.read(EE_SUNSET_MINUTE)) && (day) && (rtc.getHour() > EEPROM.read(EE_SUNRISE_HOUR)))
     {
-        if (bright == 0)
-            return;
-        elapsedSeconds brightInt;
         if (brightInt >= (EEPROM.read(EE_DURATION_SUN) * 60 / 256))
         {
-            brightInt = 0;
+
             bright--;
             analogWrite(LIGHT, bright);
+            brightInt = 0;
+            if (bright == 0)
+            {
+                day = false;
+                return;
+            }
         }
     }
+    
+    
 }

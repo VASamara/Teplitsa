@@ -12,7 +12,7 @@ void MenuLCD::SetupMenuSet()
     {
         enc.tick();
         lcd.blink();
-        uint8_t sim[]{8, 8, 8, 8};
+        uint8_t sim[]{9, 9, 9, 9};
         uint8_t str[]{0, 1, 2, 3};
         uint8_t i = constrain(i, 0, 3);
         if (enc.right())
@@ -45,14 +45,14 @@ void MenuLCD::SetupMenu()
     lcd.setCursor(0, 2);
     lcd.print(F("Poliv               "));
     lcd.setCursor(0, 3);
-    lcd.print(F("Logging             "));
-    lcd.setCursor(8, 0);
+    lcd.print(F("Lighting            "));
+    lcd.setCursor(9, 0);
     (bitRead(EEPROM.read(EE_OPTION_ON), 0)) ? lcd.print("On ") : lcd.print("Off");
-    lcd.setCursor(8, 1);
+    lcd.setCursor(9, 1);
     (bitRead(EEPROM.read(EE_OPTION_ON), 1)) ? lcd.print("On ") : lcd.print("Off");
-    lcd.setCursor(8, 2);
+    lcd.setCursor(9, 2);
     (bitRead(EEPROM.read(EE_OPTION_ON), 2)) ? lcd.print("On ") : lcd.print("Off");
-    lcd.setCursor(8, 3);
+    lcd.setCursor(9, 3);
     (bitRead(EEPROM.read(EE_OPTION_ON), 3)) ? lcd.print("On ") : lcd.print("Off");
 }
 void MenuLCD::MainMenu()
@@ -273,7 +273,7 @@ void MenuLCD::LightingSet()
                 {
                     EEPROM.put(num[i], psp[i]);
                     lcd.noBlink();
-                    enc.counter = 4;
+                    enc.counter = 6;
                     return;
                 }
             }
@@ -292,14 +292,24 @@ void MenuLCD::Lighting()
     lcd.setCursor(0, 3);
     lcd.print(F("Dlitelnost       min"));
     lcd.setCursor(12, 1);
+    if (EEPROM.read(EE_SUNRISE_HOUR) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNRISE_HOUR));
     lcd.setCursor(15, 1);
+    if (EEPROM.read(EE_SUNRISE_MINUTE) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNRISE_MINUTE));
     lcd.setCursor(12, 2);
+    if (EEPROM.read(EE_SUNSET_HOUR) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNSET_HOUR));
     lcd.setCursor(15, 2);
+    if (EEPROM.read(EE_SUNSET_MINUTE) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNSET_MINUTE));
     lcd.setCursor(12, 3);
+    if (EEPROM.read(EE_DURATION_SUN) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_DURATION_SUN));
 }
 
@@ -424,7 +434,7 @@ void MenuLCD::CoolingSet()
                 {
                     EEPROM.put(num[i], psp[i]);
                     lcd.noBlink();
-                    enc.counter = 6;
+                    enc.counter = 4;
                     return;
                 }
             }
