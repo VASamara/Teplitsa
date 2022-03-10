@@ -4,7 +4,7 @@ extern AHT10 aht10;
 extern DS3231 rtc;
 extern uint8_t numValve;
 extern EncButton<EB_TICK, 3, 2, 0> enc;
-
+extern MicroDS18B20<DALLAS_1> ds;
 
 void MenuLCD::SetupMenuSet()
 {
@@ -88,7 +88,8 @@ void MenuLCD::MainMenu()
     lcd.setCursor(17, 2);
     lcd.print(int8_t(aht10.getHumidity())); //Заменить на наружный датчик
     lcd.setCursor(17, 3);
-    lcd.print(int8_t(aht10.getTemperature())); //Заменить на потолочный датчик
+    lcd.print(int8_t(ds.getTemp()));
+   
 }
 
 void MenuLCD::MainMenu1()
@@ -124,7 +125,7 @@ void MenuLCD::MainMenu1()
     lcd.setCursor(17, 2);
     lcd.print(int8_t(aht10.getHumidity())); //Заменить на наружный датчик влажности почвы
     lcd.setCursor(17, 3);
-    lcd.print(int8_t(aht10.getTemperature())); //Заменить на датчик подогрева пола
+    lcd.print(int8_t(ds.getTemp()));
 }
 
 void MenuLCD::DateTimeSet()
@@ -334,7 +335,7 @@ void MenuLCD::HeatingSet()
                 psp[4] = constrain(enc.counter, 0, 59);
                 psp[5] = constrain(enc.counter, 5, 40);
                 psp[6] = constrain(enc.counter, 0, 255);
-                
+
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -415,7 +416,7 @@ void MenuLCD::CoolingSet()
                 psp[3] = constrain(enc.counter, 10, 30);
                 psp[4] = constrain(enc.counter, 0, 255);
                 psp[5] = constrain(enc.counter, 0, 90);
-                
+
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -496,7 +497,7 @@ void MenuLCD::WateringSet()
                 psp[7] = constrain(enc.counter, 0, 23);
                 psp[8] = constrain(enc.counter, 0, 59);
                 psp[9] = constrain(enc.counter, 0, 90);
-               
+
                 lcd.setCursor((sim[i]), str[i]);
                 if ((psp[i] < 10) && (i > 6))
                     lcd.print(0);

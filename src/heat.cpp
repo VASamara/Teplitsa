@@ -9,29 +9,32 @@ uint8_t tempIn;
 uint8_t tempOut;
 elapsedSeconds interVal;
 elapsedMillis emds;
-elapsedSeconds esDH;
+elapsedSeconds dsInt;
 
 void Heat::Heating()
 {
+    if (dsInt >= 10)
+    {
+        dsInt = 0;
+        bool day;
+        if ((rtc.getHour() >= EEPROM.read(EE_SUNRISE_HOUR)) && (rtc.getHour() < EEPROM.read(EE_SUNSET_HOUR)))
+            day = true;
+        else
+            day = false;
 
-    bool day;
-    if ((rtc.getHour() >= EEPROM.read(EE_SUNRISE_HOUR)) && (rtc.getHour() < EEPROM.read(EE_SUNSET_HOUR)))
-        day = true;
-    else
-        day = false;
-
-    ds.requestTemp();
-    if (emds >= 1000)
-        if (ds.readTemp())
-            tempHeatNow = (int8_t(ds.getTemp()));
-    if (tempHeatNow < (EEPROM.read(EE_TEMP_HEATING_DAY) - 1) && (esDH >= 60) && (day == true))
-        analogWrite(HEAT, EEPROM.read(EE_HEATING_PWM));
-    if (tempHeatNow > (EEPROM.read(EE_TEMP_HEATING_DAY) + 1) && (esDH >= 60) && (day == true))
-        analogWrite(HEAT, 0);
-    if (tempHeatNow < (EEPROM.read(EE_TEMP_HEATING_NIGHT) - 1) && (esDH >= 60) && (day == false))
-        analogWrite(HEAT, EEPROM.read(EE_HEATING_PWM));
-    if (tempHeatNow > (EEPROM.read(EE_TEMP_HEATING_NIGHT) + 1) && (esDH >= 60) && (day == false))
-        analogWrite(HEAT, 0);
+        ds.requestTemp();
+        if (emds >= 1000)
+            if (ds.readTemp())
+                tempHeatNow = (int8_t(ds.getTemp()));
+        if (tempHeatNow < EEPROM.read(EE_TEMP_HEATING_DAY) && (day == true))
+            analogWrite(HEAT, EEPROM.read(EE_HEATING_PWM));
+        if (tempHeatNow > EEPROM.read(EE_TEMP_HEATING_DAY) && (day == true))
+            analogWrite(HEAT, 0);
+        if (tempHeatNow < EEPROM.read(EE_TEMP_HEATING_NIGHT) && (day == false))
+            analogWrite(HEAT, EEPROM.read(EE_HEATING_PWM));
+        if (tempHeatNow > EEPROM.read(EE_TEMP_HEATING_NIGHT) && (day == false))
+            analogWrite(HEAT, 0);
+    }
 }
 
 void Heat::Cooling()
