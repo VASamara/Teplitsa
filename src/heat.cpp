@@ -3,10 +3,13 @@
 extern DS3231 rtc;
 extern MicroDS18B20<DALLAS_1> ds;
 extern EncButton<EB_TICK, 2, 3, 0> enc;
-
+extern AHT10 aht10;
 int8_t tempHeatNow;
-int8_t tempAirOut;
-int8_t tempAirIn;
+uint8_t tempIn;
+uint8_t tempOut;
+elapsedSeconds interVal;
+elapsedMillis emds;
+elapsedSeconds esDH;
 
 void Heat::Heating()
 {
@@ -16,8 +19,7 @@ void Heat::Heating()
         day = true;
     else
         day = false;
-    elapsedMillis emds;
-    elapsedSeconds esDH;
+
     ds.requestTemp();
     if (emds >= 1000)
         if (ds.readTemp())
@@ -35,35 +37,65 @@ void Heat::Heating()
 void Heat::Cooling()
 {
 
-    elapsedSeconds es; //Защита от дребезга, слишком частого срабатывания
-    if ((tempAirIn > EEPROM.read(EE_TEMP_COOLING_IN_OPEN)) && (tempAirOut > EEPROM.read(EE_TEMP_COOLING_OUT_OPEN)) && (es >= 300))
+    elapsedSeconds drvStopDelay;
+    uint8_t ds;
+    if (interVal >= 30)
     {
-        digitalWrite(DRV_SIG_1, HIGH);
-        digitalWrite(DRV_SIG_2, LOW);
-        analogWrite(DRV_PWM, EEPROM.read(EE_COOLING_PWM));
-        elapsedSeconds drvStopDelay;
-        if (drvStopDelay >= EEPROM.read(EE_COOLING_DRV_STOP_DELAY))
-            analogWrite(DRV_PWM, 0);
-    }
+        tempIn = int8_t(aht10.getTemperature());
+        tempOut = int8_t(aht10.getTemperature());
+        interVal = 0;
 
-    if ((tempAirIn < EEPROM.read(EE_TEMP_COOLING_IN_CLOSE)) && (tempAirOut < EEPROM.read(EE_TEMP_COOLING_OUT_CLOSE)) && (es >= 300))
-    {
-        digitalWrite(DRV_SIG_1, LOW);
-        digitalWrite(DRV_SIG_2, HIGH);
-        analogWrite(DRV_PWM, EEPROM.read(EE_COOLING_PWM));
-        elapsedSeconds drvStopDelay;
-        if (drvStopDelay >= EEPROM.read(EE_COOLING_DRV_STOP_DELAY))
-            analogWrite(DRV_PWM, 0);
+        if ((tempIn > EEPROM.read(EE_TEMP_COOLING_IN_OPEN)) && (tempOut > EEPROM.read(EE_TEMP_COOLING_OUT_OPEN)) && digitalRead(DRV_SIG_2))
+        {
+            digitalWrite(DRV_SIG_1, HIGH);
+            digitalWrite(DRV_SIG_2, LOW);
+            analogWrite(DRV_PWM, EEPROM.read(EE_COOLING_PWM));
+            drvStopDelay = 0;
+            ds = EEPROM.read(EE_COOLING_DRV_STOP_DELAY);
+            while (1)
+            {
+                if (drvStopDelay >= ds)
+                {
+                    analogWrite(DRV_PWM, 0);
+                    return;
+                }
+            }
+        }
+
+        if ((tempIn < EEPROM.read(EE_TEMP_COOLING_IN_CLOSE)) && (tempOut < EEPROM.read(EE_TEMP_COOLING_OUT_CLOSE)) && digitalRead(DRV_SIG_1))
+        {
+            digitalWrite(DRV_SIG_1, LOW);
+            digitalWrite(DRV_SIG_2, HIGH);
+            analogWrite(DRV_PWM, EEPROM.read(EE_COOLING_PWM));
+            drvStopDelay = 0;
+            ds = (EEPROM.read(EE_COOLING_DRV_STOP_DELAY) + 3);
+            while (1)
+            {
+                if (drvStopDelay >= ds)
+                {
+                    analogWrite(DRV_PWM, 0);
+                    return;
+                }
+            }
+        }
     }
 }
+
 void Heat::ButCooling()
 {
 
+    elapsedSeconds drvStopDelay;
+    uint8_t ds;
     digitalWrite(DRV_SIG_1, !digitalRead(DRV_SIG_1));
     digitalWrite(DRV_SIG_2, !digitalRead(DRV_SIG_2));
+    (digitalRead(DRV_SIG_1)) ? ds = EEPROM.read(EE_COOLING_DRV_STOP_DELAY) : ds = (EEPROM.read(EE_COOLING_DRV_STOP_DELAY) + 3);
     analogWrite(DRV_PWM, EEPROM.read(EE_COOLING_PWM));
-    elapsedSeconds drvStopDelay;
-    if (drvStopDelay >= EEPROM.read(EE_COOLING_DRV_STOP_DELAY))
-        analogWrite(DRV_PWM, 0);
-    
+    while (1)
+    {
+        if (drvStopDelay >= ds)
+        {
+            analogWrite(DRV_PWM, 0);
+            return;
+        }
+    }
 }

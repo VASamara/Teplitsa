@@ -4,7 +4,7 @@ extern AHT10 aht10;
 extern DS3231 rtc;
 extern uint8_t numValve;
 extern EncButton<EB_TICK, 3, 2, 0> enc;
-elapsedMillis t;
+
 
 void MenuLCD::SetupMenuSet()
 {
@@ -80,15 +80,15 @@ void MenuLCD::MainMenu()
         lcd.print(F("0"));    //когда будет датчик
     lcd.print(rtc.getSecond());
     lcd.setCursor(6, 1);
-    lcd.print(uint8_t(aht10.getTemperature()));
+    lcd.print(int8_t(aht10.getTemperature()));
     lcd.setCursor(6, 2);
-    lcd.print(uint8_t(aht10.getHumidity()));
+    lcd.print(int8_t(aht10.getHumidity()));
     lcd.setCursor(17, 1);
-    lcd.print(uint8_t(aht10.getTemperature())); //Заменить на наружный датчик
+    lcd.print(int8_t(aht10.getTemperature())); //Заменить на наружный датчик
     lcd.setCursor(17, 2);
-    lcd.print(uint8_t(aht10.getHumidity())); //Заменить на наружный датчик
+    lcd.print(int8_t(aht10.getHumidity())); //Заменить на наружный датчик
     lcd.setCursor(17, 3);
-    lcd.print(uint8_t(aht10.getTemperature())); //Заменить на потолочный датчик
+    lcd.print(int8_t(aht10.getTemperature())); //Заменить на потолочный датчик
 }
 
 void MenuLCD::MainMenu1()
@@ -116,15 +116,15 @@ void MenuLCD::MainMenu1()
         lcd.print(F("0"));    //когда будет датчик
     lcd.print(rtc.getSecond());
     lcd.setCursor(6, 1);
-    lcd.print(uint8_t(aht10.getTemperature())); //Заменить на датчик температуры почвы
+    lcd.print(int8_t(aht10.getTemperature())); //Заменить на датчик температуры почвы
     lcd.setCursor(6, 2);
-    lcd.print(uint8_t(aht10.getHumidity())); //Заменить на датчик влажности почвы
+    lcd.print(int8_t(aht10.getHumidity())); //Заменить на датчик влажности почвы
     lcd.setCursor(17, 1);
-    lcd.print(uint8_t(aht10.getTemperature())); //Заменить на наружный датчик температуры почвы
+    lcd.print(int8_t(aht10.getTemperature())); //Заменить на наружный датчик температуры почвы
     lcd.setCursor(17, 2);
-    lcd.print(uint8_t(aht10.getHumidity())); //Заменить на наружный датчик влажности почвы
+    lcd.print(int8_t(aht10.getHumidity())); //Заменить на наружный датчик влажности почвы
     lcd.setCursor(17, 3);
-    lcd.print(uint8_t(aht10.getTemperature())); //Заменить на датчик подогрева пола
+    lcd.print(int8_t(aht10.getTemperature())); //Заменить на датчик подогрева пола
 }
 
 void MenuLCD::DateTimeSet()
@@ -158,11 +158,6 @@ void MenuLCD::DateTimeSet()
                 psp[5] = constrain(enc.counter, 0, 99);
                 psp[6] = constrain(enc.counter, 1, 7);
 
-                if (enc.leftH())
-                    if (psp[i] > 0)
-                        (psp[i]--);
-                if (enc.rightH())
-                    (psp[i]++);
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -260,11 +255,6 @@ void MenuLCD::LightingSet()
                 psp[3] = constrain(enc.counter, 0, 59);
                 psp[4] = constrain(enc.counter, 0, 59);
 
-                if (enc.leftH())
-                    if (psp[i] > 0)
-                        (psp[i]--);
-                if (enc.rightH())
-                    (psp[i]++);
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -344,12 +334,7 @@ void MenuLCD::HeatingSet()
                 psp[4] = constrain(enc.counter, 0, 59);
                 psp[5] = constrain(enc.counter, 5, 40);
                 psp[6] = constrain(enc.counter, 0, 255);
-
-                if (enc.leftH())
-                    if (psp[i] > 0)
-                        (psp[i]--);
-                if (enc.rightH())
-                    (psp[i]++);
+                
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -377,14 +362,22 @@ void MenuLCD::Heating()
     lcd.setCursor(0, 3);
     lcd.print(F("Heating PWM         "));
     lcd.setCursor(6, 1);
+    if (EEPROM.read(EE_SUNRISE_HOUR) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNRISE_HOUR));
     lcd.setCursor(9, 1);
+    if (EEPROM.read(EE_SUNRISE_MINUTE) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNRISE_MINUTE));
     lcd.setCursor(17, 1);
     lcd.print(EEPROM.read(EE_TEMP_HEATING_DAY));
     lcd.setCursor(6, 2);
+    if (EEPROM.read(EE_SUNSET_HOUR) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNSET_HOUR));
     lcd.setCursor(9, 2);
+    if (EEPROM.read(EE_SUNSET_MINUTE) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_SUNSET_MINUTE));
     lcd.setCursor(17, 2);
     lcd.print(EEPROM.read(EE_TEMP_HEATING_NIGHT));
@@ -402,6 +395,7 @@ void MenuLCD::CoolingSet()
         uint8_t sim[]{8, 17, 8, 17, 8, 17};
         uint8_t str[]{1, 1, 2, 2, 3, 3};
         uint8_t num[]{EE_TEMP_COOLING_OUT_OPEN, EE_TEMP_COOLING_IN_OPEN, EE_TEMP_COOLING_OUT_CLOSE, EE_TEMP_COOLING_IN_CLOSE, EE_COOLING_PWM, EE_COOLING_DRV_STOP_DELAY};
+        uint8_t encSt[]{30, 30, 20, 20, 200, 10};
         uint8_t i = constrain(i, 0, 5);
         if (enc.right())
             i++;
@@ -411,6 +405,7 @@ void MenuLCD::CoolingSet()
 
         if (enc.click())
         {
+            enc.counter = encSt[i];
             while (1)
             {
                 enc.tick();
@@ -420,12 +415,7 @@ void MenuLCD::CoolingSet()
                 psp[3] = constrain(enc.counter, 10, 30);
                 psp[4] = constrain(enc.counter, 0, 255);
                 psp[5] = constrain(enc.counter, 0, 90);
-
-                if (enc.leftH())
-                    if (psp[i] > 0)
-                        (psp[i]--);
-                if (enc.rightH())
-                    (psp[i]++);
+                
                 lcd.setCursor((sim[i]), str[i]);
                 if (psp[i] < 10)
                     lcd.print(0);
@@ -464,6 +454,8 @@ void MenuLCD::Cooling()
     lcd.setCursor(8, 3);
     lcd.print(EEPROM.read(EE_COOLING_PWM));
     lcd.setCursor(17, 3);
+    if (EEPROM.read(EE_COOLING_DRV_STOP_DELAY) < 10)
+        lcd.print(F("0"));
     lcd.print(EEPROM.read(EE_COOLING_DRV_STOP_DELAY));
 }
 
@@ -504,12 +496,7 @@ void MenuLCD::WateringSet()
                 psp[7] = constrain(enc.counter, 0, 23);
                 psp[8] = constrain(enc.counter, 0, 59);
                 psp[9] = constrain(enc.counter, 0, 90);
-
-                if (enc.leftH())
-                    if (psp[i] > 0)
-                        (psp[i]--);
-                if (enc.rightH())
-                    (psp[i]++);
+               
                 lcd.setCursor((sim[i]), str[i]);
                 if ((psp[i] < 10) && (i > 6))
                     lcd.print(0);
