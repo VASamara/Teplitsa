@@ -29,6 +29,8 @@ void setup()
   lcd.init();
   lcd.backlight();
   Serial.begin(115200);
+  Wire.begin();
+  portPoliv.setRegister(0);
   enc.getState();
   menu.MainMenu();
   numValve = 1;
