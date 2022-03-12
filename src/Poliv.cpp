@@ -5,40 +5,53 @@ extern DS3231 rtc;
 elapsedSeconds polivInt;
 extern IO_PORT bitValve;
 extern uint8_t numValve;
-uint8_t SetWeekDays;
+elapsedSeconds timePoliv;
+uint8_t SetWeekDay;
 uint8_t SetHours;
 uint8_t SetMinutes;
 uint8_t SetLong;
+bool flag1;
 
 void Poliv::SetPoliv()
 {
     elapsedSeconds es;
     uint8_t startHour = EEPROM.read(EE_VLV_1_SET_HOUR);
     uint8_t startMinute = EEPROM.read(EE_VLV_1_SET_MINUTE);
-    uint8_t q[7]{};
-    bool vlv1 = bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv2 = bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv3 = bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv4 = bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv5 = bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv6 = bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
-    bool vlv7 = bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+    // uint8_t q[7]{};
+    bool vlv1;
+    bool vlv2;
+    bool vlv3;
+    bool vlv4;
+    bool vlv5;
+    bool vlv6;
+    bool vlv7;
 
-    if ((rtc.getHour() == startHour) && rtc.getMinute() >= startMinute)
+    if (rtc.getHour() == startHour && rtc.getMinute() == startMinute && SetWeekDay != rtc.getWeekDay())
     {
-        if (vlv1)
-            StartPoliv(VLV_1, EEPROM.read(EE_VLV_1_SET_LONG));
+        SetWeekDay = rtc.getWeekDay();
+        vlv1 = bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv2 = bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv3 = bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv4 = bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv5 = bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv6 = bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
+        vlv7 = bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
     }
+    if (vlv1 && flag1 == false)
+        StartPoliv(VLV_1, EEPROM.read(EE_VLV_1_SET_LONG));
 }
 void Poliv::StartPoliv(IO_PORT bitValve, uint8_t setLong)
 {
-    elapsedSeconds timePoliv;
+    delay(200);
+
     portPoliv.setBit(POMP, true);
     portPoliv.setBit(bitValve, true);
     Serial.println(bitValve);
     Serial.println(timePoliv);
-    if (timePoliv >= (setLong))
+    Serial.println(setLong);
+    if (timePoliv >= setLong)
     {
+        flag1 = true;
         portPoliv.setRegister(0);
         timePoliv = 0;
         return;
