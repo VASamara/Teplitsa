@@ -89,7 +89,6 @@ void MenuLCD::MainMenu()
     lcd.print(int8_t(aht10.getHumidity())); //Заменить на наружный датчик
     lcd.setCursor(17, 3);
     lcd.print(int8_t(ds.getTemp()));
-   
 }
 
 void MenuLCD::MainMenu1()
@@ -465,7 +464,6 @@ void MenuLCD::WateringSet()
 
     uint8_t id = (enc.counter - 6);
     id = constrain(id, 1, 7);
-    Serial.println(id);
     while (1)
     {
         enc.tick();
@@ -515,9 +513,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), i));
                     }
                     if ((id == 1) && (i == 7))
-                        EEPROM.put(EE_VLV_1_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 1) && (i == 8))
-                        EEPROM.put(EE_VLV_1_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 1) && (i == 9))
                         EEPROM.put(EE_VLV_1_SET_LONG, psp[i]);
 
@@ -530,9 +528,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), i));
                     }
                     if ((id == 2) && (i == 7))
-                        EEPROM.put(EE_VLV_2_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 2) && (i == 8))
-                        EEPROM.put(EE_VLV_2_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 2) && (i == 9))
                         EEPROM.put(EE_VLV_2_SET_LONG, psp[i]);
 
@@ -545,9 +543,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), i));
                     }
                     if ((id == 3) && (i == 7))
-                        EEPROM.put(EE_VLV_3_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 3) && (i == 8))
-                        EEPROM.put(EE_VLV_3_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 3) && (i == 9))
                         EEPROM.put(EE_VLV_3_SET_LONG, psp[i]);
 
@@ -560,9 +558,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), i));
                     }
                     if ((id == 4) && (i == 7))
-                        EEPROM.put(EE_VLV_4_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 4) && (i == 8))
-                        EEPROM.put(EE_VLV_4_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 4) && (i == 9))
                         EEPROM.put(EE_VLV_4_SET_LONG, psp[i]);
 
@@ -575,9 +573,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), i));
                     }
                     if ((id == 5) && (i == 7))
-                        EEPROM.put(EE_VLV_5_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 5) && (i == 8))
-                        EEPROM.put(EE_VLV_5_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 5) && (i == 9))
                         EEPROM.put(EE_VLV_5_SET_LONG, psp[i]);
 
@@ -590,9 +588,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), i));
                     }
                     if ((id == 6) && (i == 7))
-                        EEPROM.put(EE_VLV_6_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 6) && (i == 8))
-                        EEPROM.put(EE_VLV_6_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 6) && (i == 9))
                         EEPROM.put(EE_VLV_6_SET_LONG, psp[i]);
 
@@ -605,9 +603,9 @@ void MenuLCD::WateringSet()
                         lcd.print(bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), i));
                     }
                     if ((id == 7) && (i == 7))
-                        EEPROM.put(EE_VLV_7_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_SET_HOUR, psp[i]);
                     if ((id == 7) && (i == 8))
-                        EEPROM.put(EE_VLV_7_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_SET_MINUTE, psp[i]);
                     if ((id == 7) && (i == 9))
                         EEPROM.put(EE_VLV_7_SET_LONG, psp[i]);
 
@@ -631,8 +629,8 @@ void MenuLCD::Watering()
     lcd.setCursor(0, 3);
     lcd.print(F("TH  >>              "));
 
-    uint8_t SetHours;
-    uint8_t SetMinutes;
+    uint8_t SetHours = EEPROM.read(EE_SET_HOUR);
+    uint8_t SetMinutes = EEPROM.read(EE_SET_MINUTE);
     uint8_t SetLong;
     uint8_t SetWeekDays;
     uint8_t i = constrain(enc.counter, 7, 13);
@@ -641,44 +639,30 @@ void MenuLCD::Watering()
     {
     case 7:
         SetWeekDays = EEPROM.read(EE_VLV_1_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_1_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_1_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_1_SET_LONG);
         break;
     case 8:
         SetWeekDays = EEPROM.read(EE_VLV_2_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_2_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_2_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_2_SET_LONG);
         break;
     case 9:
         SetWeekDays = EEPROM.read(EE_VLV_3_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_3_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_3_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_3_SET_LONG);
         break;
     case 10:
         SetWeekDays = EEPROM.read(EE_VLV_4_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_4_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_4_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_4_SET_LONG);
         break;
     case 11:
         SetWeekDays = EEPROM.read(EE_VLV_5_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_5_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_5_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_5_SET_LONG);
         break;
     case 12:
         SetWeekDays = EEPROM.read(EE_VLV_6_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_6_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_6_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_6_SET_LONG);
         break;
     case 13:
         SetWeekDays = EEPROM.read(EE_VLV_7_SET_WEEK_DAYS);
-        SetHours = EEPROM.read(EE_VLV_7_SET_HOUR);
-        SetMinutes = EEPROM.read(EE_VLV_7_SET_MINUTE);
         SetLong = EEPROM.read(EE_VLV_7_SET_LONG);
         break;
     }

@@ -49,11 +49,7 @@ void loop()
 
   enc.tick();
   if (enc.held())
-  {
     heat.ButCooling();
-
-    Serial.println("held");
-  }
 
   if (enc.right() or enc.left())
   {

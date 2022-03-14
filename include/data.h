@@ -13,7 +13,6 @@
 #include <heat.h>
 #include <microDS18B20.h>
 
-
 #define SW 0        //* Кнопка энкодера  pin D0                         // SW
 #define WCNTR 1     // Счетчик расхода воды                            // RELAY_0
 #define DT 2        //* Сигнал энкодера                                 // DT
@@ -34,8 +33,8 @@
 #define SENS_2 A3   // Датчик влажности грунта                         // SENS_2    A3
 //#define SDA A4      // Шина I2C                                        //
 //#define SCL A5      // Шина I2C                                        //
-#define SENS_3 A6   // Датчик температуры грунта                       // SENS_3    A6
-#define SENS_4 A7   // Датчик температуры грунта                       // SENS_4    A7
+#define SENS_3 A6 // Датчик температуры грунта                       // SENS_3    A6
+#define SENS_4 A7 // Датчик температуры грунта                       // SENS_4    A7
 
 #define EE_SUNRISE_HOUR 0
 #define EE_SUNRISE_MINUTE 1
@@ -56,38 +55,26 @@
 
 #define EE_OPTION_ON 14
 
+#define EE_SET_HOUR 15
+#define EE_SET_MINUTE 16
+
 #define EE_VLV_1_SET_WEEK_DAYS 20
-#define EE_VLV_1_SET_HOUR 21
-#define EE_VLV_1_SET_MINUTE 22
-#define EE_VLV_1_SET_LONG 23
+#define EE_VLV_1_SET_LONG 21
 
-#define EE_VLV_2_SET_WEEK_DAYS 24
-#define EE_VLV_2_SET_HOUR 25
-#define EE_VLV_2_SET_MINUTE 26
-#define EE_VLV_2_SET_LONG 27
+#define EE_VLV_2_SET_WEEK_DAYS 22
+#define EE_VLV_2_SET_LONG 23
 
-#define EE_VLV_3_SET_WEEK_DAYS 28
-#define EE_VLV_3_SET_HOUR 29
-#define EE_VLV_3_SET_MINUTE 30
-#define EE_VLV_3_SET_LONG 31
+#define EE_VLV_3_SET_WEEK_DAYS 24
+#define EE_VLV_3_SET_LONG 25
 
-#define EE_VLV_4_SET_WEEK_DAYS 32
-#define EE_VLV_4_SET_HOUR 33
-#define EE_VLV_4_SET_MINUTE 34
-#define EE_VLV_4_SET_LONG 35
+#define EE_VLV_4_SET_WEEK_DAYS 26
+#define EE_VLV_4_SET_LONG 27
 
-#define EE_VLV_5_SET_WEEK_DAYS 36
-#define EE_VLV_5_SET_HOUR 37
-#define EE_VLV_5_SET_MINUTE 38
-#define EE_VLV_5_SET_LONG 39
+#define EE_VLV_5_SET_WEEK_DAYS 28
+#define EE_VLV_5_SET_LONG 29
 
-#define EE_VLV_6_SET_WEEK_DAYS 40
-#define EE_VLV_6_SET_HOUR 41
-#define EE_VLV_6_SET_MINUTE 42
-#define EE_VLV_6_SET_LONG 43
+#define EE_VLV_6_SET_WEEK_DAYS 30
+#define EE_VLV_6_SET_LONG 31
 
-#define EE_VLV_7_SET_WEEK_DAYS 44
-#define EE_VLV_7_SET_HOUR 45
-#define EE_VLV_7_SET_MINUTE 46
-#define EE_VLV_7_SET_LONG 47
-
+#define EE_VLV_7_SET_WEEK_DAYS 32
+#define EE_VLV_7_SET_LONG 33

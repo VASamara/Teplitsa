@@ -19,7 +19,6 @@ private:
 
 public:
     void SetPoliv();
-    void StartPoliv(IO_PORT, uint8_t); //Номер клапана, длительность
 };
 
 #endif
