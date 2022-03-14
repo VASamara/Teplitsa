@@ -57,6 +57,7 @@
 
 #define EE_SET_HOUR 15
 #define EE_SET_MINUTE 16
+#define EE_SET_WEEK_DAY 17
 
 #define EE_VLV_1_SET_WEEK_DAYS 20
 #define EE_VLV_1_SET_LONG 21
