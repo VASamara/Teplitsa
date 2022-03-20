@@ -38,14 +38,14 @@ void MenuLCD::SetupMenuSet()
 void MenuLCD::SetupMenu()
 {
 
-    lcd.setCursor(0, 0);
-    lcd.print(F("Cooling             "));
+    lcd.clear();
+    lcd.print(F("Cooling"));
     lcd.setCursor(0, 1);
-    lcd.print(F("Heating             "));
+    lcd.print(F("Heating"));
     lcd.setCursor(0, 2);
-    lcd.print(F("Poliv               "));
+    lcd.print(F("Poliv"));
     lcd.setCursor(0, 3);
-    lcd.print(F("Lighting            "));
+    lcd.print(F("Lighting"));
     lcd.setCursor(9, 0);
     (bitRead(EEPROM.read(EE_OPTION_ON), 0)) ? lcd.print("On ") : lcd.print("Off");
     lcd.setCursor(9, 1);
@@ -57,7 +57,7 @@ void MenuLCD::SetupMenu()
 }
 void MenuLCD::MainMenu()
 {
-    lcd.setCursor(0, 0);
+    lcd.clear();
     lcd.print(F("  :  Day  AtD    mmR"));
     lcd.setCursor(0, 1);
     lcd.print(F("TemIn   C TemOut   C"));
@@ -93,7 +93,7 @@ void MenuLCD::MainMenu()
 
 void MenuLCD::MainMenu1()
 {
-    lcd.setCursor(0, 0);
+    lcd.clear();
     lcd.print(F("  :  Day  AtD    mmR"));
     lcd.setCursor(0, 1);
     lcd.print(F("TGrIn   C TGrOut   C"));
@@ -189,14 +189,14 @@ void MenuLCD::DateTimeSet()
 
 void MenuLCD::DateTime()
 {
-    lcd.setCursor(0, 0);
-    lcd.print(F("     Date/Time      "));
+    lcd.clear();
+    lcd.print(F("     Date/Time"));
     lcd.setCursor(0, 1);
-    lcd.print(F("Hr Mt Sc  DM Mo  Yr "));
-    lcd.setCursor(0, 2);
-    lcd.print(F("                    "));
+    lcd.print(F("Hr Mt Sc  DM Mo  Yr"));
+    // lcd.setCursor(0, 2);
+    // lcd.print(F("                    "));
     lcd.setCursor(0, 3);
-    lcd.print(F("Week Day            "));
+    lcd.print(F("Week Day"));
     lcd.setCursor(0, 2);
     if (rtc.getHour() < 10)
         lcd.print(F("0"));
@@ -273,12 +273,12 @@ void MenuLCD::LightingSet()
 
 void MenuLCD::Lighting()
 {
-    lcd.setCursor(0, 0);
-    lcd.print(F("     Podsvetka      "));
+    lcd.clear();
+    lcd.print(F("     Podsvetka"));
     lcd.setCursor(0, 1);
-    lcd.print(F("Rassvet       :     "));
+    lcd.print(F("Rassvet       :"));
     lcd.setCursor(0, 2);
-    lcd.print(F("Zakat         :     "));
+    lcd.print(F("Zakat         :"));
     lcd.setCursor(0, 3);
     lcd.print(F("Dlitelnost       min"));
     lcd.setCursor(12, 1);
@@ -353,14 +353,14 @@ void MenuLCD::HeatingSet()
 
 void MenuLCD::Heating()
 {
-    lcd.setCursor(0, 0);
-    lcd.print(F("   Podogrev pola    "));
+    lcd.clear();
+    lcd.print(F("   Podogrev pola"));
     lcd.setCursor(0, 1);
     lcd.print(F("Rassv   :   TmpD   C"));
     lcd.setCursor(0, 2);
     lcd.print(F("Zakat   :   TmpN   C"));
     lcd.setCursor(0, 3);
-    lcd.print(F("Heating PWM         "));
+    lcd.print(F("Heating PWM"));
     lcd.setCursor(6, 1);
     if (EEPROM.read(EE_SUNRISE_HOUR) < 10)
         lcd.print(F("0"));
@@ -435,8 +435,8 @@ void MenuLCD::CoolingSet()
 void MenuLCD::Cooling()
 {
 
-    lcd.setCursor(0, 0);
-    lcd.print(F("     Fortochka      "));
+    lcd.clear();
+    lcd.print(F("     Fortochka"));
     lcd.setCursor(0, 1);
     lcd.print(F("OpnTOut>  C&Tpot>  C"));
     lcd.setCursor(0, 2);
@@ -517,9 +517,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 1) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 1) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 1) && (i == 9))
                         EEPROM.put(EE_VLV_1_SET_LONG, psp[i]);
 
@@ -532,9 +532,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 2) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 2) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 2) && (i == 9))
                         EEPROM.put(EE_VLV_2_SET_LONG, psp[i]);
 
@@ -547,9 +547,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 3) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 3) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 3) && (i == 9))
                         EEPROM.put(EE_VLV_3_SET_LONG, psp[i]);
 
@@ -562,9 +562,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 4) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 4) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 4) && (i == 9))
                         EEPROM.put(EE_VLV_4_SET_LONG, psp[i]);
 
@@ -577,9 +577,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 5) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 5) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 5) && (i == 9))
                         EEPROM.put(EE_VLV_5_SET_LONG, psp[i]);
 
@@ -592,9 +592,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 6) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 6) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 6) && (i == 9))
                         EEPROM.put(EE_VLV_6_SET_LONG, psp[i]);
 
@@ -607,9 +607,9 @@ void MenuLCD::WateringSet()
                         (bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 7) && (i == 7))
-                        EEPROM.put(EE_SET_HOUR, psp[i]);
+                        EEPROM.put(EE_WATERING_HOUR, psp[i]);
                     if ((id == 7) && (i == 8))
-                        EEPROM.put(EE_SET_MINUTE, psp[i]);
+                        EEPROM.put(EE_WATERING_MINUTE, psp[i]);
                     if ((id == 7) && (i == 9))
                         EEPROM.put(EE_VLV_7_SET_LONG, psp[i]);
 
@@ -624,17 +624,17 @@ void MenuLCD::WateringSet()
 
 void MenuLCD::Watering()
 {
-    lcd.setCursor(0, 0);
+    lcd.clear();
     lcd.print(F("MO  FR   Poliv   Vlv"));
     lcd.setCursor(0, 1);
-    lcd.print(F("TU  SA   On     :   "));
+    lcd.print(F("TU  SA   On     :"));
     lcd.setCursor(0, 2);
     lcd.print(F("WE  SU   Time    min"));
     lcd.setCursor(0, 3);
-    lcd.print(F("TH  >>              "));
+    lcd.print(F("TH  >>"));
 
-    uint8_t SetHours = EEPROM.read(EE_SET_HOUR);
-    uint8_t SetMinutes = EEPROM.read(EE_SET_MINUTE);
+    uint8_t SetHours = EEPROM.read(EE_WATERING_HOUR);
+    uint8_t SetMinutes = EEPROM.read(EE_WATERING_MINUTE);
     uint8_t SetLong;
     uint8_t SetWeekDays;
     uint8_t i = constrain(enc.counter, 7, 13);

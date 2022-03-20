@@ -26,6 +26,9 @@ public:
     float getTemperatureFloat(void); // получить температуру float
     int getTemperature(void);        // получить температуру
 
+    //String getTimeString(); // получить время как строку вида HH:MM:SS
+    //String getDateString(); // получить дату как строку вида DD.MM.YYYY
+
 private:
     // static uint8_t encodeRegister(int8_t data);
     static int getTemperatureRaw(void);

@@ -11,9 +11,9 @@ uint8_t i = constrain(i, 1, 8);
 
 void Func::SetPoliv()
 {
-    uint8_t startHour = EEPROM.read(EE_SET_HOUR);
-    uint8_t startMinute = EEPROM.read(EE_SET_MINUTE);
-    uint8_t setWeekDay = EEPROM.read(EE_SET_WEEK_DAY);
+    uint8_t startHour = EEPROM.read(EE_WATERING_HOUR);
+    uint8_t startMinute = EEPROM.read(EE_WATERING_MINUTE);
+    uint8_t setWeekDay = EEPROM.read(EE_WATERING_WEEK_DAY);
 
     q[1] = bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
     q[2] = bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), (rtc.getWeekDay()) - 1);
@@ -41,7 +41,7 @@ void Func::SetPoliv()
         if (i > 7)
         {
             setWeekDay = rtc.getWeekDay();
-            EEPROM.put(EE_SET_WEEK_DAY, setWeekDay);
+            EEPROM.put(EE_WATERING_WEEK_DAY, setWeekDay);
             i = 1;
         }
     }

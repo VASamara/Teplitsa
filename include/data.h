@@ -52,9 +52,9 @@
 
 #define EE_OPTION_ON 14
 
-#define EE_SET_HOUR 15
-#define EE_SET_MINUTE 16
-#define EE_SET_WEEK_DAY 17
+#define EE_WATERING_HOUR 15
+#define EE_WATERING_MINUTE 16
+#define EE_WATERING_WEEK_DAY 17
 
 #define EE_VLV_1_SET_WEEK_DAYS 20
 #define EE_VLV_1_SET_LONG 21
@@ -104,4 +104,5 @@ public:
     void ButCooling();
     void Lighting();
     void SetPoliv();
+    void Logging();
 };
