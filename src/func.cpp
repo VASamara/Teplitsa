@@ -11,7 +11,7 @@ elapsedSeconds interVal;
 elapsedMillis emds;
 elapsedSeconds dsInt;
 
-void Heat::Heating()
+void Func::Heating()
 {
     if (dsInt >= 10)
     {
@@ -37,7 +37,7 @@ void Heat::Heating()
     }
 }
 
-void Heat::Cooling()
+void Func::Cooling()
 {
 
     elapsedSeconds drvStopDelay;
@@ -84,7 +84,7 @@ void Heat::Cooling()
     }
 }
 
-void Heat::ButCooling()
+void Func::ButCooling()
 {
 
     elapsedSeconds drvStopDelay;

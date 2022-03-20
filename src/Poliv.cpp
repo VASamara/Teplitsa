@@ -1,4 +1,4 @@
-#include <Poliv.h>
+#include <data.h>
 
 extern PCF8574 portPoliv;
 extern DS3231 rtc;
@@ -9,7 +9,7 @@ uint8_t setLong[8]{0, EEPROM.read(EE_VLV_1_SET_LONG), EEPROM.read(EE_VLV_2_SET_L
 IO_PORT vlv[8]{POMP, VLV_1, VLV_2, VLV_3, VLV_4, VLV_5, VLV_6, VLV_7};
 uint8_t i = constrain(i, 1, 8);
 
-void Poliv::SetPoliv()
+void Func::SetPoliv()
 {
     uint8_t startHour = EEPROM.read(EE_SET_HOUR);
     uint8_t startMinute = EEPROM.read(EE_SET_MINUTE);

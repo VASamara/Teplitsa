@@ -1,4 +1,4 @@
-#include <menu.h>
+#include <data.h>
 extern LiquidCrystal_I2C lcd;
 extern AHT10 aht10;
 extern DS3231 rtc;
@@ -497,9 +497,13 @@ void MenuLCD::WateringSet()
                 psp[9] = constrain(enc.counter, 0, 90);
 
                 lcd.setCursor((sim[i]), str[i]);
-                if ((psp[i] < 10) && (i > 6))
-                    lcd.print(0);
-                lcd.print(psp[i]);
+                if (i > 6)
+                {
+                    if (psp[i] < 10)
+                        lcd.print(0);
+                    lcd.print(psp[i]);
+                }
+
                 if (enc.click())
                 {
                     uint8_t wdSet;
@@ -510,7 +514,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_1_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_1_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 1) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -525,7 +529,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_2_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_2_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 2) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -540,7 +544,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_3_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_3_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 3) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -555,7 +559,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_4_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_4_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 4) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -570,7 +574,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_5_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_5_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 5) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -585,7 +589,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_6_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_6_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 6) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -600,7 +604,7 @@ void MenuLCD::WateringSet()
                         bitWrite(wdSet, i, !bitRead(wdSet, i));
                         EEPROM.put(EE_VLV_7_SET_WEEK_DAYS, wdSet);
                         lcd.setCursor(sim[i], str[i]);
-                        lcd.print(bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), i));
+                        (bitRead(EEPROM.read(EE_VLV_7_SET_WEEK_DAYS), i)) ? lcd.print("*") : lcd.print(" ");
                     }
                     if ((id == 7) && (i == 7))
                         EEPROM.put(EE_SET_HOUR, psp[i]);
@@ -668,19 +672,19 @@ void MenuLCD::Watering()
     }
 
     lcd.setCursor(2, 0);
-    lcd.print(bitRead(SetWeekDays, 0));
+    (bitRead(SetWeekDays, 0)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(2, 1);
-    lcd.print(bitRead(SetWeekDays, 1));
+    (bitRead(SetWeekDays, 1)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(2, 2);
-    lcd.print(bitRead(SetWeekDays, 2));
+    (bitRead(SetWeekDays, 2)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(2, 3);
-    lcd.print(bitRead(SetWeekDays, 3));
+    (bitRead(SetWeekDays, 3)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(6, 0);
-    lcd.print(bitRead(SetWeekDays, 4));
+    (bitRead(SetWeekDays, 4)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(6, 1);
-    lcd.print(bitRead(SetWeekDays, 5));
+    (bitRead(SetWeekDays, 5)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(6, 2);
-    lcd.print(bitRead(SetWeekDays, 6));
+    (bitRead(SetWeekDays, 6)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(16, 0);
     lcd.print(i - 6);
     lcd.setCursor(14, 1);

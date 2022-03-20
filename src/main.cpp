@@ -6,17 +6,16 @@ EncButton<EB_TICK, 3, 2, 0> enc;
 PCF8574 portPoliv;
 AHT10 aht10;
 DS3231 rtc;
-Sun sun;
-Heat heat;
-Poliv poliv;
+Func func;
 MicroDS18B20<DALLAS_1> ds;
 IO_PORT bitValve;
-uint8_t numValve = constrain(numValve, 1, 7);
+File myFile;
 
 void setup()
 {
   pinMode(LIGHT, OUTPUT);
   pinMode(HEAT, OUTPUT);
+  pinMode(SPI_SS, OUTPUT);
   pinMode(DRV_PWM, OUTPUT);
   pinMode(DRV_SIG_1, OUTPUT);
   pinMode(DRV_SIG_2, OUTPUT);
@@ -29,27 +28,78 @@ void setup()
   lcd.init();
   lcd.backlight();
   Serial.begin(115200);
-  Wire.begin();
   portPoliv.setRegister(0);
   enc.getState();
   menu.MainMenu();
-  numValve = 1;
+
+  Serial.print("Initializing SD card...");
+
+  if (!SD.begin(SPI_SS))
+  {
+    Serial.println("initialization failed. Things to check:");
+    Serial.println("1. is a card inserted?");
+
+    while (true)
+      ;
+  }
+
+  Serial.println("initialization done.");
+
+  // open the file. note that only one file can be open at a time,
+  // so you have to close this one before opening another.
+  SD.mkdir("MART/19");
+  myFile = SD.open("/MART/19/dataLog.csv", FILE_WRITE);
+
+  // if the file opened okay, write to it:
+  if (myFile)
+  {
+    Serial.print("Writing to test.txt...");
+    myFile.println("теперь понятно что за хрень");
+    // close the file:
+    myFile.close();
+    Serial.println("done.");
+  }
+  else
+  {
+    // if the file didn't open, print an error:
+    Serial.println("error opening test.txt");
+  }
+
+  // re-open the file for reading:
+  myFile = SD.open("/MART/19/dataLog.csv");
+  if (myFile)
+  {
+    Serial.println("test.txt:");
+
+    // read from the file until there's nothing else in it:
+    while (myFile.available())
+    {
+      Serial.write(myFile.read());
+    }
+    // close the file:
+    myFile.close();
+  }
+  else
+  {
+    // if the file didn't open, print an error:
+    Serial.println("error opening test.txt");
+  }
 }
 void loop()
 {
 
   if (bitRead(EEPROM.read(EE_OPTION_ON), 0))
-    heat.Cooling();
+    func.Cooling();
   if (bitRead(EEPROM.read(EE_OPTION_ON), 1))
-    heat.Heating();
+    func.Heating();
   if (bitRead(EEPROM.read(EE_OPTION_ON), 2))
-    poliv.SetPoliv();
+    func.SetPoliv();
   if (bitRead(EEPROM.read(EE_OPTION_ON), 3))
-    sun.Lighting();
+    func.Lighting();
 
   enc.tick();
   if (enc.held())
-    heat.ButCooling();
+    func.ButCooling();
 
   if (enc.right() or enc.left())
   {

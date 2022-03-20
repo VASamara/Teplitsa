@@ -1,16 +1,13 @@
 #pragma once
 #include <Arduino.h>
+#include <SD.h>
 #include <DS3231.h>
 #include <AHT10.h>
-#include <menu.h>
 #include <EncButton.h>
 #include <LiquidCrystal_I2C.h>
 #include <PCF8574.h>
 #include <EEPROM.h>
 #include <elapsedMillis.h>
-#include <Poliv.h>
-#include <sun.h>
-#include <heat.h>
 #include <microDS18B20.h>
 
 #define SW 0        //* Кнопка энкодера  pin D0                         // SW
@@ -23,7 +20,7 @@
 #define DRV_SIG_1 7 //* Привод окна в теплице IN1                       // RELAY_4
 #define DRV_SIG_2 8 //* Привод окна в теплице IN2                       // RELAY_5
 #define LIGHT 9     //* Освещение в рассаднике                          // RELAY_6
-//#define SS 10       // Шина SPI                                        // DRV_SIGNAL1 10
+#define SPI_SS 10   // Шина SPI                                         // DRV_SIGNAL1 10
 //#define MOSI 11     // Шина SPI                                        // DRV_PWM     11
 //#define MISO 12     // Шина SPI                                        // DRV_SIGNAL2 12
 //#define SCK 13      // Шина SPI                                        // SERVO_0   13
@@ -79,3 +76,32 @@
 
 #define EE_VLV_7_SET_WEEK_DAYS 32
 #define EE_VLV_7_SET_LONG 33
+
+class MenuLCD
+{
+public:
+    void MainMenu();
+    void MainMenu1();
+    void DateTime();
+    void DateTimeSet();
+    void Lighting();
+    void LightingSet();
+    void Heating();
+    void HeatingSet();
+    void Cooling();
+    void CoolingSet();
+    void Watering();
+    void WateringSet();
+    void SetupMenu();
+    void SetupMenuSet();
+};
+
+class Func
+{
+public:
+    void Heating();
+    void Cooling();
+    void ButCooling();
+    void Lighting();
+    void SetPoliv();
+};
