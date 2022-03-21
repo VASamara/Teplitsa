@@ -2,7 +2,6 @@
 extern LiquidCrystal_I2C lcd;
 extern AHT10 aht10;
 extern DS3231 rtc;
-extern uint8_t numValve;
 extern EncButton<EB_TICK, 3, 2, 0> enc;
 extern MicroDS18B20<DALLAS_1> ds;
 
@@ -90,7 +89,7 @@ void MenuLCD::MainMenu()
     lcd.setCursor(17, 3);
     lcd.print(int8_t(ds.getTemp()));
 }
-
+/*
 void MenuLCD::MainMenu1()
 {
     lcd.clear();
@@ -126,7 +125,7 @@ void MenuLCD::MainMenu1()
     lcd.setCursor(17, 3);
     lcd.print(int8_t(ds.getTemp()));
 }
-
+*/
 void MenuLCD::DateTimeSet()
 {
     while (1)

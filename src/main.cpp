@@ -32,7 +32,7 @@ void setup()
   menu.MainMenu();
   SD.begin(SPI_SS);
 
-  func.Logging();
+ 
 
     
 }
@@ -47,7 +47,8 @@ void loop()
     func.SetPoliv();
   if (bitRead(EEPROM.read(EE_OPTION_ON), 3))
     func.Lighting();
-
+  func.Logging();
+  
   enc.tick();
   if (enc.held())
     func.ButCooling();
@@ -62,7 +63,7 @@ void loop()
       menu.MainMenu();
       break;
     case 1:
-      menu.MainMenu1();
+      menu.MainMenu();
       break;
     case 2:
       menu.SetupMenu();
