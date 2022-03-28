@@ -27,7 +27,7 @@ void MenuLCD::SetupMenuSet()
             EEPROM.put(EE_OPTION_ON, wdSet);
             lcd.setCursor(sim[i], str[i]);
             (bitRead(EEPROM.read(EE_OPTION_ON), i)) ? lcd.print("On ") : lcd.print("Off");
-            enc.counter = 2;
+            enc.counter = 1;
             lcd.noBlink();
             return;
         }
@@ -178,7 +178,7 @@ void MenuLCD::DateTimeSet()
                     if (i == 6)
                         rtc.setWeekDay(psp[i]);
                     lcd.noBlink();
-                    enc.counter = 3;
+                    enc.counter = 2;
                     return;
                 }
             }
@@ -262,7 +262,7 @@ void MenuLCD::LightingSet()
                 {
                     EEPROM.put(num[i], psp[i]);
                     lcd.noBlink();
-                    enc.counter = 6;
+                    enc.counter = 5;
                     return;
                 }
             }
@@ -342,7 +342,7 @@ void MenuLCD::HeatingSet()
                 {
                     EEPROM.put(num[i], psp[i]);
                     lcd.noBlink();
-                    enc.counter = 5;
+                    enc.counter = 4;
                     return;
                 }
             }
@@ -423,7 +423,7 @@ void MenuLCD::CoolingSet()
                 {
                     EEPROM.put(num[i], psp[i]);
                     lcd.noBlink();
-                    enc.counter = 4;
+                    enc.counter = 3;
                     return;
                 }
             }
@@ -461,7 +461,7 @@ void MenuLCD::Cooling()
 void MenuLCD::WateringSet()
 {
 
-    uint8_t id = (enc.counter - 6);
+    uint8_t id = (enc.counter - 5);
     id = constrain(id, 1, 7);
     while (1)
     {
@@ -636,35 +636,35 @@ void MenuLCD::Watering()
     uint8_t SetMinutes = EEPROM.read(EE_WATERING_MINUTE);
     uint8_t SetLong;
     uint8_t SetWeekDays;
-    uint8_t i = constrain(enc.counter, 7, 13);
+    uint8_t i = constrain(enc.counter, 6, 12);
 
     switch (i)
     {
-    case 7:
+    case 6:
         SetWeekDays = EEPROM.read(EE_VLV_1_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_1_SET_LONG);
         break;
-    case 8:
+    case 7:
         SetWeekDays = EEPROM.read(EE_VLV_2_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_2_SET_LONG);
         break;
-    case 9:
+    case 8:
         SetWeekDays = EEPROM.read(EE_VLV_3_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_3_SET_LONG);
         break;
-    case 10:
+    case 9:
         SetWeekDays = EEPROM.read(EE_VLV_4_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_4_SET_LONG);
         break;
-    case 11:
+    case 10:
         SetWeekDays = EEPROM.read(EE_VLV_5_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_5_SET_LONG);
         break;
-    case 12:
+    case 11:
         SetWeekDays = EEPROM.read(EE_VLV_6_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_6_SET_LONG);
         break;
-    case 13:
+    case 12:
         SetWeekDays = EEPROM.read(EE_VLV_7_SET_WEEK_DAYS);
         SetLong = EEPROM.read(EE_VLV_7_SET_LONG);
         break;
@@ -685,7 +685,7 @@ void MenuLCD::Watering()
     lcd.setCursor(6, 2);
     (bitRead(SetWeekDays, 6)) ? lcd.print("*") : lcd.print(" ");
     lcd.setCursor(16, 0);
-    lcd.print(i - 6);
+    lcd.print(i - 5);
     lcd.setCursor(14, 1);
     if (SetHours < 10)
         lcd.print(F("0"));

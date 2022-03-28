@@ -1,5 +1,5 @@
 #include <data.h>
-
+/*
 extern DS3231 rtc;
 extern File file;
 extern AHT10 aht10;
@@ -49,7 +49,7 @@ void Func::Logging()
         file.println(data);
         file.close();
         Serial.println(data);
-    }
+    }*/
     /*
             Serial.println(month);
             Serial.println(fileName);
@@ -78,5 +78,5 @@ void Func::Logging()
 
                 }
 
-     */
-}
+     
+}*/

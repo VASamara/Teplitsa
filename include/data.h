@@ -1,6 +1,6 @@
 #pragma once
 #include <Arduino.h>
-#include <SD.h>
+//#include <SD.h>
 #include <DS3231.h>
 #include <AHT10.h>
 #include <EncButton.h>
@@ -9,6 +9,7 @@
 #include <EEPROM.h>
 #include <elapsedMillis.h>
 #include <microDS18B20.h>
+#include <GyverNTC.h>
 
 #define SW 0        //* Кнопка энкодера  pin D0                         // SW
 #define WCNTR 1     // Счетчик расхода воды                            // RELAY_0
@@ -20,7 +21,7 @@
 #define DRV_SIG_1 7 //* Привод окна в теплице IN1                       // RELAY_4
 #define DRV_SIG_2 8 //* Привод окна в теплице IN2                       // RELAY_5
 #define LIGHT 9     //* Освещение в рассаднике                          // RELAY_6
-#define SPI_SS 10   // Шина SPI                                         // DRV_SIGNAL1 10
+//#define SPI_SS 10   // Шина SPI                                         // DRV_SIGNAL1 10
 //#define MOSI 11     // Шина SPI                                        // DRV_PWM     11
 //#define MISO 12     // Шина SPI                                        // DRV_SIGNAL2 12
 //#define SCK 13      // Шина SPI                                        // SERVO_0   13
@@ -81,7 +82,7 @@ class MenuLCD
 {
 public:
     void MainMenu();
-    void MainMenu1();
+    //void MainMenu1();
     void DateTime();
     void DateTimeSet();
     void Lighting();
